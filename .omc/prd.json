@@ -1,0 +1,109 @@
+{
+  "title": "앤아더라이프 웹사이트 프로젝트 초기 세팅",
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "Next.js 15 프로젝트 초기화 및 핵심 의존성 설치",
+      "priority": 1,
+      "passes": false,
+      "acceptanceCriteria": [
+        "Next.js 15+ App Router 프로젝트가 생성되어 있다 (package.json에 next 15+ 버전 확인)",
+        "TypeScript 5.x가 설정되어 있다 (tsconfig.json 존재, strict mode 활성화)",
+        "핵심 dependencies 설치: @supabase/supabase-js, @supabase/ssr, zustand, react-hook-form, zod, @hookform/resolvers, framer-motion, lucide-react, clsx, tailwind-merge",
+        "Markdown 파이프라인 dependencies 설치: remark, remark-gfm, remark-rehype, rehype-slug, rehype-autolink-headings, rehype-stringify, unist-util-visit",
+        "npm run dev 실행 시 에러 없이 로컬 서버가 기동된다",
+        "npm run build 실행 시 에러 없이 빌드가 완료된다"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Tailwind CSS v4 + shadcn/ui 설정",
+      "priority": 2,
+      "passes": false,
+      "acceptanceCriteria": [
+        "Tailwind CSS v4가 설치되고 globals.css에 @import 'tailwindcss' 지시자가 있다",
+        "shadcn/ui가 초기화되어 components/ui/ 디렉토리가 존재한다",
+        "shadcn/ui 기본 컴포넌트(button, input, card, textarea, select, badge, dialog, accordion)가 설치되어 있다",
+        "cn() 유틸 함수가 lib/utils/cn.ts에 정의되어 있다 (clsx + tailwind-merge)",
+        "디자인 토큰이 CSS 변수로 정의됨: primary(#2D6A4F), secondary(#F5F0E8), accent(#C17B5F), neutral 계열"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "프로젝트 설정 파일 구성 (next.config, tsconfig, ESLint, Prettier)",
+      "priority": 3,
+      "passes": false,
+      "acceptanceCriteria": [
+        "next.config.ts에 이미지 도메인(supabase), 보안 헤더, 리다이렉트 설정이 포함되어 있다",
+        "tsconfig.json에 경로 별칭(@/components, @/lib, @/types, @/hooks, @/constants)이 설정되어 있다",
+        ".eslintrc.json에 next/core-web-vitals extends가 설정되어 있다",
+        ".prettierrc에 semi:true, singleQuote:true, trailingComma:'es5', printWidth:80이 설정되어 있다",
+        "postcss.config.js가 존재한다 (Tailwind v4 통합)"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "전체 디렉토리 구조 생성",
+      "priority": 4,
+      "passes": false,
+      "acceptanceCriteria": [
+        "app/ 하위에 blog/[category]/[slug], about, team/[slug], programs/[slug], contact, api/revalidate, api/webhook 라우트 디렉토리가 모두 존재한다",
+        "components/ 하위에 layout, blog, cta, forms, home, seo, ui 디렉토리가 존재한다",
+        "lib/ 하위에 supabase, seo, markdown, utils 디렉토리가 존재한다",
+        "hooks, types, constants, styles, public/images, public/fonts 디렉토리가 존재한다",
+        "supabase/migrations, supabase/functions 디렉토리가 존재한다",
+        ".env.example 파일이 존재하고 필요한 환경 변수 키가 모두 나열되어 있다"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "디자인 시스템 토큰 및 글로벌 스타일 설정",
+      "priority": 5,
+      "passes": false,
+      "acceptanceCriteria": [
+        "globals.css에 Tailwind v4 CSS 변수로 디자인 토큰이 정의됨 (primary, secondary, accent, neutral 풀 팔레트)",
+        "Pretendard 폰트가 next/font로 설정되어 있다 (app/layout.tsx에서 로드)",
+        "constants/site.ts에 사이트명, URL 등 기본 상수가 정의되어 있다",
+        "constants/categories.ts에 7개 카테고리(mental-health, counseling-stories 등)가 slug, name, target_audience, default_cta_type과 함께 정의되어 있다",
+        "types/blog.ts에 Post, Category, Tag, Author 타입이 정의되어 있다"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "Supabase 클라이언트 설정 및 타입 정의",
+      "priority": 6,
+      "passes": false,
+      "acceptanceCriteria": [
+        "lib/supabase/client.ts에 브라우저 환경 Supabase 클라이언트가 구현되어 있다",
+        "lib/supabase/server.ts에 서버 환경 Supabase 클라이언트가 구현되어 있다 (@supabase/ssr 사용)",
+        "lib/supabase/types.ts에 Database 타입이 정의되어 있다 (posts, categories, tags, authors, post_tags, contact_inquiries, program_registrations, newsletter_subscribers 테이블)",
+        "supabase/migrations/001_initial_schema.sql에 전체 DB 스키마(8개 테이블 + 인덱스 + RLS)가 정의되어 있다",
+        "TypeScript 컴파일 시 supabase 관련 타입 에러가 없다"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "루트 레이아웃 및 기본 페이지 뼈대 생성",
+      "priority": 7,
+      "passes": false,
+      "acceptanceCriteria": [
+        "app/layout.tsx에 Pretendard 폰트, 글로벌 메타데이터(title, description, og tags), html lang='ko'가 설정되어 있다",
+        "app/page.tsx (홈), app/blog/page.tsx, app/about/page.tsx, app/team/page.tsx, app/programs/page.tsx, app/contact/page.tsx에 기본 placeholder 컴포넌트가 있다",
+        "app/not-found.tsx, app/error.tsx, app/loading.tsx가 존재한다",
+        "app/sitemap.ts, app/robots.ts가 기본 구현되어 있다",
+        "npm run build 실행 시 모든 라우트가 에러 없이 빌드된다"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "CLAUDE.md 에이전트 가이드 파일 생성",
+      "priority": 8,
+      "passes": false,
+      "acceptanceCriteria": [
+        "프로젝트 루트에 CLAUDE.md가 존재하고 프로젝트 개요, 기술 스택, 디렉토리 구조, 코딩 컨벤션, 커밋 규칙이 포함되어 있다",
+        "CLAUDE.md에 Supabase 연동 방법, 환경 변수 설명이 포함되어 있다",
+        "CLAUDE.md에 SEO 관련 주의사항(메타 태그 필수, 시맨틱 HTML, 구조화 데이터)이 포함되어 있다"
+      ]
+    }
+  ]
+}
