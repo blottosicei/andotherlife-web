@@ -40,7 +40,7 @@ export function Header() {
             앤아더라이프
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-6" aria-label="주 메뉴">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}

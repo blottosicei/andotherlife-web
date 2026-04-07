@@ -7,25 +7,37 @@ export function generateArticleSchema(post: {
   published_at?: string | null;
   updated_at: string;
   thumbnail_url?: string | null;
-  author?: { name: string } | null;
+  author?: { name: string; slug?: string } | null;
+  url: string;
 }) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': post.url,
+    },
     headline: post.title,
     description: post.excerpt || '',
-    image: post.thumbnail_url || '',
+    ...(post.thumbnail_url ? { image: post.thumbnail_url } : {}),
     datePublished: post.published_at || post.updated_at,
     dateModified: post.updated_at,
+    url: post.url,
     author: {
       '@type': 'Person',
       name: post.author?.name || SITE_CONFIG.name,
+      ...(post.author?.slug ? { url: `${SITE_CONFIG.url}/team/${post.author.slug}` } : {}),
     },
     publisher: {
       '@type': 'Organization',
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_CONFIG.url}/logo.png`,
+      },
     },
+    inLanguage: SITE_CONFIG.language,
   };
 }
 
@@ -60,15 +72,27 @@ export function generateBreadcrumbSchema(
 }
 
 export function generateOrganizationSchema() {
+  const sameAs = [
+    SITE_CONFIG.social?.kakao,
+    SITE_CONFIG.social?.naver,
+    SITE_CONFIG.social?.instagram,
+  ].filter(Boolean);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITE_CONFIG.url}/#organization`,
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
     description: SITE_CONFIG.description,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_CONFIG.url}/logo.png`,
+    },
+    ...(sameAs.length > 0 ? { sameAs } : {}),
     contactPoint: {
       '@type': 'ContactPoint',
-      contactType: 'Customer Service',
+      contactType: 'customer service',
       availableLanguage: 'Korean',
       ...(SITE_CONFIG.phone ? { telephone: SITE_CONFIG.phone } : {}),
       ...(SITE_CONFIG.email ? { email: SITE_CONFIG.email } : {}),
@@ -84,27 +108,40 @@ export function generateLocalBusinessSchema() {
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
     description: SITE_CONFIG.description,
-    telephone: SITE_CONFIG.phone || undefined,
-    email: SITE_CONFIG.email || undefined,
+    ...(SITE_CONFIG.phone ? { telephone: SITE_CONFIG.phone } : {}),
+    ...(SITE_CONFIG.email ? { email: SITE_CONFIG.email } : {}),
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_CONFIG.url}/logo.png`,
+    },
     address: {
       '@type': 'PostalAddress',
-      addressLocality: '서울',
-      addressCountry: 'KR',
+      streetAddress: SITE_CONFIG.address.streetAddress,
+      addressLocality: SITE_CONFIG.address.addressLocality,
+      addressRegion: SITE_CONFIG.address.addressRegion,
+      postalCode: SITE_CONFIG.address.postalCode,
+      addressCountry: SITE_CONFIG.address.addressCountry,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: SITE_CONFIG.geo.latitude,
+      longitude: SITE_CONFIG.geo.longitude,
     },
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '10:00',
-        closes: '19:00',
+        opens: SITE_CONFIG.hours.weekday.open,
+        closes: SITE_CONFIG.hours.weekday.close,
       },
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: 'Saturday',
-        opens: '10:00',
-        closes: '15:00',
+        opens: SITE_CONFIG.hours.saturday.open,
+        closes: SITE_CONFIG.hours.saturday.close,
       },
     ],
+    priceRange: '₩₩',
   };
 }
 
@@ -114,6 +151,7 @@ export function generatePersonSchema(person: {
   description?: string | null;
   url?: string | null;
   image?: string | null;
+  specialties?: string[] | null;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -123,10 +161,93 @@ export function generatePersonSchema(person: {
     ...(person.description ? { description: person.description } : {}),
     ...(person.url ? { url: person.url } : {}),
     ...(person.image ? { image: person.image } : {}),
+    ...(person.specialties?.length ? { knowsAbout: person.specialties } : {}),
     affiliation: {
       '@type': 'Organization',
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
+    },
+  };
+}
+
+export function generateWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_CONFIG.url}/#website`,
+    url: SITE_CONFIG.url,
+    name: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+    inLanguage: SITE_CONFIG.language,
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE_CONFIG.url}/#organization`,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_CONFIG.url}/blog?search={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+export function generateCourseSchema(course: {
+  name: string;
+  description: string;
+  slug: string;
+  instructor: string;
+  duration: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    '@id': `${SITE_CONFIG.url}/programs/${course.slug}`,
+    name: course.name,
+    description: course.description,
+    url: `${SITE_CONFIG.url}/programs/${course.slug}`,
+    provider: {
+      '@type': 'Organization',
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+    },
+    instructor: {
+      '@type': 'Person',
+      name: course.instructor,
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'onsite',
+      instructor: {
+        '@type': 'Person',
+        name: course.instructor,
+      },
+    },
+  };
+}
+
+export function generateServiceSchema(service: {
+  name: string;
+  description: string;
+  slug: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${SITE_CONFIG.url}/counseling/${service.slug}`,
+    name: service.name,
+    description: service.description,
+    url: `${SITE_CONFIG.url}/counseling/${service.slug}`,
+    provider: {
+      '@type': 'LocalBusiness',
+      '@id': `${SITE_CONFIG.url}/#organization`,
+    },
+    serviceType: '심리상담',
+    areaServed: {
+      '@type': 'City',
+      name: '서울',
     },
   };
 }

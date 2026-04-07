@@ -5,13 +5,20 @@ import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/site';
 
+const PROGRAMS_MAP: Record<string, string> = {
+  'counselor-training': '상담사 수련프로그램',
+  'bowen-family-systems': '보웬가족체계치료 전문가과정',
+  'structural-family-therapy': '구조적가족치료 전문가과정',
+  'case-conceptualization': '사례개념화 연수과정',
+};
+
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   return {
     ...generatePageMetadata({
-      title: slug,
+      title: PROGRAMS_MAP[slug] || slug,
       description: '앤아더라이프 심리상담연구소 교육 프로그램 상세 안내',
       path: `/programs/${slug}`,
     }),
@@ -25,7 +32,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '홈', url: SITE_CONFIG.url },
     { name: '교육 프로그램', url: `${SITE_CONFIG.url}/programs` },
-    { name: slug, url: `${SITE_CONFIG.url}/programs/${slug}` },
+    { name: PROGRAMS_MAP[slug] || slug, url: `${SITE_CONFIG.url}/programs/${slug}` },
   ]);
 
   return (
@@ -35,7 +42,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
         <Breadcrumb
           items={[
             { label: '교육 프로그램', href: '/programs' },
-            { label: slug },
+            { label: PROGRAMS_MAP[slug] || slug },
           ]}
         />
 

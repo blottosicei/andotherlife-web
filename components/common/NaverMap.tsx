@@ -45,7 +45,7 @@ export function NaverMap({
 
     // 스크립트 로드
     const script = document.createElement('script');
-    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}`;
+    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}`;
     script.async = true;
     script.onload = () => {
       setIsLoaded(true);
@@ -67,10 +67,9 @@ export function NaverMap({
     const map = new window.naver.maps.Map(mapRef.current, {
       center: position,
       zoom: 16,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.naver.maps.Position.TOP_RIGHT,
-      },
+      zoomControl: false,
+      scaleControl: false,
+      mapDataControl: false,
     });
 
     new window.naver.maps.Marker({

@@ -32,16 +32,24 @@ export const metadata: Metadata = {
     default: '앤아더라이프 심리상담연구소',
     template: '%s | 앤아더라이프 심리상담연구소',
   },
-  description: '앤아더라이프 심리상담연구소 - 마음건강, 심리상담, 교육 프로그램 전문',
+  description: '앤아더라이프 심리상담연구소 - 전문 심리상담과 가족치료, 부부상담, 아동청소년상담을 제공합니다.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com'),
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     siteName: '앤아더라이프 심리상담연구소',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: '앤아더라이프 심리상담연구소' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-touch-icon.png',
   },
 };
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCounselingPrograms } from '@/lib/supabase/queries';
 import { generatePageMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { generateBreadcrumbSchema, generateServiceSchema } from '@/lib/seo/schema';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/site';
@@ -26,9 +26,17 @@ export default async function CounselingPage() {
     { name: '상담 프로그램', url: `${SITE_CONFIG.url}/counseling` },
   ]);
 
+  const serviceSchemas = programs.map((program: any) =>
+    generateServiceSchema({
+      name: program.title,
+      description: program.subtitle || program.title,
+      slug: program.slug,
+    })
+  );
+
   return (
     <>
-      <SchemaMarkup schema={breadcrumbSchema} />
+      <SchemaMarkup schema={[breadcrumbSchema, ...serviceSchemas]} />
       <main className="mx-auto max-w-[1280px] px-4 py-8 md:px-6">
         <Breadcrumb items={[{ label: '상담 프로그램' }]} />
 

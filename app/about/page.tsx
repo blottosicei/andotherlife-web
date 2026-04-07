@@ -168,7 +168,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <h3 className="mb-2 font-semibold text-[#2f3331]">이메일</h3>
-                  <p className="text-[#5c605d]">{SITE_CONFIG.email || 'business@mindfullabs.ai'}</p>
+                  <p className="text-[#5c605d]">{SITE_CONFIG.email}</p>
                 </div>
               </div>
             </div>

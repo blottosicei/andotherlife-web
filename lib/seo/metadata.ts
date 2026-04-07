@@ -71,5 +71,10 @@ export function generatePageMetadata(options: {
       siteName: SITE_CONFIG.name,
       locale: SITE_CONFIG.locale,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: options.title,
+      description: options.description,
+    },
   };
 }

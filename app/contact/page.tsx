@@ -124,10 +124,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-xs text-[#5c605d]">전화</p>
                     <a
-                      href="tel:02-000-0000"
+                      href={`tel:${SITE_CONFIG.phone || ''}`}
                       className="text-sm font-medium text-[#2f3331] hover:text-[#2d6a4f] transition-colors"
                     >
-                      02-000-0000
+                      {SITE_CONFIG.phone || '전화번호 준비중'}
                     </a>
                   </div>
                 </li>
@@ -136,10 +136,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-xs text-[#5c605d]">이메일</p>
                     <a
-                      href="mailto:info@andtoherlife.com"
+                      href={`mailto:${SITE_CONFIG.email}`}
                       className="text-sm font-medium text-[#2f3331] hover:text-[#2d6a4f] transition-colors"
                     >
-                      info@andtoherlife.com
+                      {SITE_CONFIG.email}
                     </a>
                   </div>
                 </li>
@@ -147,22 +147,26 @@ export default function ContactPage() {
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#2d6a4f]" />
                   <div>
                     <p className="text-xs text-[#5c605d]">운영 시간</p>
-                    <p className="text-sm font-medium text-[#2f3331]">평일 09:00 – 18:00</p>
-                    <p className="text-xs text-[#5c605d]">주말 및 공휴일 휴무</p>
+                    <p className="text-sm font-medium text-[#2f3331]">
+                      평일 {SITE_CONFIG.hours.weekday.open} – {SITE_CONFIG.hours.weekday.close}
+                    </p>
+                    <p className="text-xs text-[#5c605d]">
+                      토요일 {SITE_CONFIG.hours.saturday.open} – {SITE_CONFIG.hours.saturday.close} / 일·공휴일 휴무
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#2d6a4f]" />
                   <div>
                     <p className="text-xs text-[#5c605d]">주소</p>
-                    <p className="text-sm font-medium text-[#2f3331]">서울특별시 강남구 (상세 주소)</p>
+                    <p className="text-sm font-medium text-[#2f3331]">{SITE_CONFIG.address.full}</p>
                   </div>
                 </li>
               </ul>
             </div>
 
             {/* Map */}
-            <NaverMap height="200px" />
+            <NaverMap height="280px" />
 
             {/* KakaoTalk button */}
             <a

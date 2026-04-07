@@ -13,12 +13,19 @@ import { BlogSearch } from '@/components/blog/BlogSearch';
 
 export const revalidate = 3600;
 
-export async function generateMetadata(): Promise<Metadata> {
-  return generatePageMetadata({
-    title: '블로그',
+type MetaSearchParams = Promise<{ search?: string }>;
+
+export async function generateMetadata({ searchParams }: { searchParams: MetaSearchParams }): Promise<Metadata> {
+  const { search } = await searchParams;
+  const base = generatePageMetadata({
+    title: search?.trim() ? `'${search.trim()}' 검색 결과` : '블로그',
     description: '앤아더라이프 심리상담연구소 블로그 - 마음건강, 심리상담, 자기성장에 관한 전문 콘텐츠',
     path: '/blog',
   });
+  if (search?.trim()) {
+    return { ...base, robots: { index: false, follow: true } };
+  }
+  return base;
 }
 
 type SearchParams = Promise<{ page?: string; category?: string; search?: string }>;

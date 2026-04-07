@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { generatePageMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { generateBreadcrumbSchema, generatePersonSchema } from '@/lib/seo/schema';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { BottomCTA } from '@/components/cta/BottomCTA';
@@ -24,9 +24,20 @@ export default async function TeamPage() {
     { name: '교수진 소개', url: `${SITE_CONFIG.url}/team` },
   ]);
 
+  const personSchemas = authors.map((author) =>
+    generatePersonSchema({
+      name: author.name,
+      jobTitle: author.title ?? null,
+      description: author.bio ?? null,
+      url: `${SITE_CONFIG.url}/team/${author.slug}`,
+      image: null,
+      specialties: author.specialties ?? null,
+    })
+  );
+
   return (
     <>
-      <SchemaMarkup schema={breadcrumbSchema} />
+      <SchemaMarkup schema={[breadcrumbSchema, ...personSchemas]} />
       <main className="mx-auto max-w-[1280px] px-4 py-12">
         <Breadcrumb items={[{ label: '교수진 소개' }]} />
 

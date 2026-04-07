@@ -84,7 +84,8 @@ export default async function PostPage({ params }: { params: Params }) {
     published_at: post.published_at,
     updated_at: post.updated_at,
     thumbnail_url: post.thumbnail_url,
-    author: post.author ?? null,
+    author: post.author ? { name: post.author.name, slug: post.author.slug } : null,
+    url: postUrl,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([

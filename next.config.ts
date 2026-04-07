@@ -25,6 +25,18 @@ const securityHeaders = [
     key: 'X-Permitted-Cross-Domain-Policies',
     value: 'none',
   },
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://oapi.map.naver.com https://openapi.map.naver.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https://*.supabase.co https://oapi.map.naver.com",
+      "connect-src 'self' https://*.supabase.co https://api.indexnow.org",
+      "font-src 'self'",
+      "frame-src 'none'",
+    ].join('; '),
+  },
 ];
 
 const nextConfig: NextConfig = {

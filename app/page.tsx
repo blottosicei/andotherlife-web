@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
-import { generateOrganizationSchema } from '@/lib/seo/schema';
+import { generateOrganizationSchema, generateWebSiteSchema } from '@/lib/seo/schema';
 import { HeroSection } from '@/components/home/HeroSection';
 import { ServiceSection } from '@/components/home/ServiceSection';
 import { ProfessorIntro } from '@/components/home/ProfessorIntro';
@@ -28,10 +28,11 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const orgSchema = generateOrganizationSchema();
+  const webSiteSchema = generateWebSiteSchema();
 
   return (
     <>
-      <SchemaMarkup schema={orgSchema} />
+      <SchemaMarkup schema={[orgSchema, webSiteSchema]} />
       <main>
         <HeroSection />
         <ServiceSection />

@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = generatePageMetadata({
-  title: '상담 철학',
-  description: '앤아더라이프 심리상담연구소의 상담 철학과 치료 접근 방식을 소개합니다.',
-  path: '/about/philosophy',
-});
+export const metadata: Metadata = {
+  ...generatePageMetadata({
+    title: '상담 철학',
+    description: '앤아더라이프 심리상담연구소의 상담 철학과 치료 접근 방식을 소개합니다.',
+    path: '/about/philosophy',
+  }),
+  robots: { index: false, follow: true },
+};
 
 export default function PhilosophyPage() {
   return (

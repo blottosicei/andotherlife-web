@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { generatePageMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { generateBreadcrumbSchema, generateCourseSchema } from '@/lib/seo/schema';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/site';
@@ -73,9 +73,19 @@ export default function ProgramsPage() {
     { name: '교육 프로그램', url: `${SITE_CONFIG.url}/programs` },
   ]);
 
+  const courseSchemas = PROGRAMS.map((program) =>
+    generateCourseSchema({
+      name: program.title,
+      description: program.description,
+      slug: program.slug,
+      instructor: program.instructor,
+      duration: program.duration,
+    })
+  );
+
   return (
     <>
-      <SchemaMarkup schema={breadcrumbSchema} />
+      <SchemaMarkup schema={[breadcrumbSchema, ...courseSchemas]} />
       <main className="mx-auto max-w-[1280px] px-4 py-12">
         <Breadcrumb items={[{ label: '교육 프로그램' }]} />
 
