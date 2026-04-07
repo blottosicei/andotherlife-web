@@ -72,6 +72,11 @@ andtoherlife-web/
 │   │   │       └── opengraph-image.tsx # 동적 OG 이미지 (1200x630)
 │   │   └── tag/[tag]/
 │   │       └── page.tsx               # 태그별 목록 (ISR)
+│   ├── counseling/
+│   │   ├── page.tsx                   # 상담 프로그램 목록 (DB: counseling_programs)
+│   │   ├── couple/page.tsx            # 부부상담 소개 (정적 코드)
+│   │   ├── young-adult/page.tsx       # 2030상담 소개 (정적 코드)
+│   │   └── [slug]/page.tsx            # 향후 추가 프로그램 (정적 코드)
 │   ├── about/
 │   │   ├── page.tsx                   # 센터 소개 (정적)
 │   │   ├── philosophy/page.tsx        # 상담 철학
@@ -109,9 +114,11 @@ andtoherlife-web/
 │   │   ├── TagFilter.tsx              # 태그 필터 (칩/버튼)
 │   │   ├── Pagination.tsx             # 페이지 네비게이션 (숫자)
 │   │   └── BlogSearch.tsx             # 블로그 내 검색 (keywords + summary 풀텍스트)
+│   ├── counseling/
+│   │   └── CounselingCard.tsx         # 상담 프로그램 카드 (목록 페이지용)
 │   ├── cta/
-│   │   ├── InlineCTA.tsx              # 본문 중간 CTA 배너 (컨텍스트 기반)
-│   │   ├── BottomCTA.tsx              # 포스트 하단 CTA (카테고리별 다른 내용)
+│   │   ├── InlineCTA.tsx              # 본문 중간 CTA 배너 (program prop으로 /counseling/{slug} 링크)
+│   │   ├── BottomCTA.tsx              # 포스트 하단 CTA (program prop으로 커스텀 텍스트/링크)
 │   │   ├── SidebarCTA.tsx             # 사이드바 고정 CTA (고정 버튼)
 │   │   ├── FloatingCTA.tsx            # 플로팅 버튼 (카카오톡, 모바일 하단)
 │   │   └── NewsletterPopup.tsx        # 이탈 방지 뉴스레터 팝업 (useExitIntent)

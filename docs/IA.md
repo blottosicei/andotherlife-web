@@ -10,6 +10,10 @@
 │   ├── /blog/[category]            [SSG, revalidate: 3600] [DB: categories + posts]
 │   │   └── /blog/[category]/[slug] [ISR, revalidate: 3600] [DB: posts]
 │   └── /blog/tag/[tag]             [SSG, revalidate: 3600] [DB: tags + posts]
+├── /counseling                     [SSG] [DB: counseling_programs (목록 카드만)]
+│   ├── /counseling/couple          [SSG] [코드 — 정적 상세 페이지]
+│   ├── /counseling/young-adult     [SSG] [코드 — 정적 상세 페이지]
+│   └── /counseling/[slug]          [SSG] [코드 — 향후 추가 프로그램]
 ├── /about                          [SSG] [코드]
 │   ├── /about/philosophy           [SSG] [코드]
 │   └── /about/facility             [SSG] [코드]
@@ -31,7 +35,7 @@
 
 #### 글로벌 네비게이션 (Header)
 ```
-홈 | 블로그 | 센터소개 | 교수진 | 교육프로그램 | 상담예약
+홈 | 블로그 | 상담 프로그램 | 센터소개 | 교수진 | 교육프로그램 | 상담예약
 ```
 
 #### 블로그 서브 네비게이션 (Blog 섹션)
@@ -81,6 +85,8 @@
 | 카테고리 목록 | `/blog/{category}` | `/blog/mental-health` | 동적 | DB: categories + posts |
 | 블로그 포스트 | `/blog/{category}/{slug}` | `/blog/mental-health/panic-disorder-coping` | 동적 | DB: posts |
 | 태그 목록 | `/blog/tag/{tag}` | `/blog/tag/anxiety` | 동적 | DB: tags + posts |
+| 상담 프로그램 목록 | `/counseling` | `/counseling` | 정적+ISR | DB: counseling_programs |
+| 상담 프로그램 상세 | `/counseling/{slug}` | `/counseling/couple` | 정적 | 코드 (정적 파일) |
 | 센터 소개 | `/about` | `/about` | 정적 | 코드 |
 | 상담 철학 | `/about/philosophy` | `/about/philosophy` | 정적 | 코드 |
 | 시설 안내 | `/about/facility` | `/about/facility` | 정적 | 코드 |
@@ -119,6 +125,7 @@
 | **schema_markup** | JSONB | 구조화 데이터 | Article Schema, FAQPage Schema, BreadcrumbList Schema |
 | **references** | JSONB | 아웃링크 참고 자료 | [{name, url, type, description}] 구조, 본문에서 자동 렌더링 |
 | **cta_type** | TEXT | CTA 유형 | consultation(상담) / education(교육) / newsletter(뉴스레터), 카테고리에서 상속 |
+| **counseling_program_id** | UUID FK | 매칭된 상담 프로그램 | 발행 시 match_keywords 비교로 자동 저장, CTA 링크 결정에 사용 |
 | **reading_time** | INTEGER | 읽기 시간 (분) | 포스트 상단 메타 정보 표시 |
 | **view_count** | INTEGER | 조회수 | 인기글 순위 정렬 (선택사항) |
 | **is_featured** | BOOLEAN | 인기글/추천글 여부 | 홈페이지 캐러셀, 블로그 목록 상단 고정 |
@@ -147,6 +154,7 @@ CREATE TABLE posts (
   schema_markup JSONB,
   references JSONB DEFAULT '[]'::jsonb,
   cta_type TEXT DEFAULT 'consultation',
+  counseling_program_id UUID REFERENCES counseling_programs(id),
   reading_time INTEGER,
   view_count INTEGER DEFAULT 0,
   is_featured BOOLEAN DEFAULT FALSE,
@@ -156,7 +164,47 @@ CREATE TABLE posts (
 );
 ```
 
-### 3.2 카테고리 모델
+### 3.2 상담 프로그램 모델 (counseling_programs)
+
+> CTA 자동 매칭 + `/counseling` 목록 카드 표시 용도. 상세 페이지 콘텐츠는 정적 코드 파일에서 관리.
+
+| 필드명 | 타입 | 설명 |
+|--------|------|------|
+| **id** | UUID | 고유 식별자 |
+| **slug** | TEXT (UNIQUE) | URL 슬러그 (예: "couple", "young-adult") |
+| **title** | TEXT | 프로그램명 (예: "부부상담 프로그램") |
+| **subtitle** | TEXT | 부제목 (예: "함께 성장하는 관계를 위한 전문 상담") |
+| **cta_heading** | TEXT | CTA 제목 (예: "관계가 힘드신가요?") |
+| **cta_button_text** | TEXT | CTA 버튼 텍스트 (예: "부부상담 알아보기") |
+| **match_keywords** | TEXT[] | 포스트 키워드 자동 매칭용 키워드 배열 |
+| **is_active** | BOOLEAN | 활성 여부 |
+| **sort_order** | INTEGER | 정렬 순서 |
+| **created_at** | TIMESTAMPTZ | 생성일 |
+
+**스키마:**
+```sql
+CREATE TABLE counseling_programs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug TEXT UNIQUE NOT NULL,
+  title TEXT NOT NULL,
+  subtitle TEXT,
+  cta_heading TEXT,
+  cta_button_text TEXT,
+  match_keywords TEXT[] DEFAULT '{}',
+  is_active BOOLEAN DEFAULT TRUE,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+**초기 데이터 (예시):**
+
+| 프로그램 | slug | cta_button_text | match_keywords (주요 키워드) |
+|---------|------|-----------------|--------------------------|
+| 부부상담 | couple | "부부상담 알아보기" | 부부, 부부갈등, 커플, 이혼, 외도 |
+| 2030상담 | young-adult | "2030상담 알아보기" | 20대, 30대, 취업, 진로, 사회초년생 |
+
+### 3.3 카테고리 모델
 
 | 필드명 | 타입 | 설명 |
 |--------|------|------|
@@ -166,6 +214,7 @@ CREATE TABLE posts (
 | **description** | TEXT | 카테고리 설명 |
 | **target_audience** | TEXT | 타겟 ('client' / 'professional') |
 | **default_cta_type** | TEXT | 기본 CTA 유형 (consultation / education / newsletter) |
+| **default_program_id** | UUID FK | 카테고리 기본 상담 프로그램 (키워드 매칭 실패 시 폴백) |
 | **seo_title** | TEXT | 카테고리 페이지 SEO 타이틀 |
 | **seo_description** | TEXT | 카테고리 페이지 SEO 디스크립션 |
 | **sort_order** | INTEGER | 정렬 순서 (네비게이션 표시 순서 제어) |
@@ -180,6 +229,7 @@ CREATE TABLE categories (
   description TEXT,
   target_audience TEXT,
   default_cta_type TEXT,
+  default_program_id UUID REFERENCES counseling_programs(id),
   seo_title TEXT,
   seo_description TEXT,
   sort_order INTEGER DEFAULT 0,
@@ -282,13 +332,19 @@ Google 검색 결과
 │  ├─ 섹션당 200~350자 (AI 인용률 최적화)
 │  ├─ Markdown 테이블 (비교/수치 정보)
 │  ├─ 본문 중간 InlineCTA 배너
-│  │   └─ "전문 상담이 필요하신가요? 상담 예약하기"
+│  │   └─ "○○상담 알아보기" (posts.counseling_program_id 기반 커스텀 텍스트)
 │  └─ 본문 마지막 FAQ (3~5개 질문)
 ├─ 참고 자료 섹션 (references JSONB → 아웃링크 자동 렌더링)
 ├─ 소셜 공유 버튼
 ├─ 관련 포스트 추천 (같은 카테고리/태그)
-└─ 하단 BottomCTA 섹션 (카테고리 default_cta_type 기반)
-    └─ "지금 상담 예약하기" (주요 CTA)
+└─ 하단 BottomCTA 섹션 (counseling_program_id 기반 CTA)
+    └─ "○○상담 알아보기" (프로그램 cta_button_text)
+        ↓
+    /counseling/[slug] (상담 프로그램 소개 — 정적 페이지)
+    (매칭 프로그램 없으면 → /counseling 목록)
+        ↓
+    [프로그램 소개 읽기]
+    └─ 하단 CTA "상담 예약하기"
         ↓
     /contact (상담 예약 폼)
         ↓
@@ -348,7 +404,8 @@ Supabase program_registrations 테이블 저장
     [사용자 자발적 탐색]
     ├─ /about → 센터 철학 + 시설 소개 → /contact
     ├─ /team → 교수진 프로필 확인 → 개별 /team/{slug}
-    ├─ /blog → 블로그 탐색 → 포스트 상세 → CTA
+    ├─ /blog → 블로그 탐색 → 포스트 상세 → CTA → /counseling/[slug] → /contact
+    ├─ /counseling → 상담 프로그램 목록 → 개별 /counseling/{slug} → /contact
     └─ /programs → 교육 프로그램 탐색 → 수강 신청
 ```
 
@@ -425,6 +482,8 @@ Supabase newsletter_subscribers 테이블 저장
 | /blog | Home > Blog |
 | /blog/mental-health | Home > Blog > 마음건강 |
 | /blog/mental-health/depression-symptoms | Home > Blog > 마음건강 > 우울증의 주요 증상 10가지 |
+| /counseling | Home > 상담 프로그램 |
+| /counseling/couple | Home > 상담 프로그램 > 부부상담 |
 | /team | Home > 교수진 |
 | /team/dr-kim | Home > 교수진 > 김○○ 상담사 |
 | /programs | Home > 교육 프로그램 |
@@ -520,7 +579,7 @@ Canonical: <link rel="canonical" href="https://www.example.com/blog" />
 
 #### 사이트맵 분할 규칙
 
-- **sitemap-pages.xml:** 홈, 어바웃, 팀, 프로그램, 컨택트 등 정적 페이지 (~ 50개)
+- **sitemap-pages.xml:** 홈, 어바웃, 팀, 상담 프로그램(/counseling, /counseling/{slug}), 교육 프로그램, 컨택트 등 정적 페이지 (~ 50개)
 - **sitemap-posts-1.xml, -2.xml, ...:** 블로그 포스트 분할 (파일당 최대 50,000개 URL, 권장 20,000개 이하)
   - 500편 기준: 2개 파일로 분할 (`-1.xml`: 1~250편, `-2.xml`: 251~500편)
 - **sitemap-categories.xml:** 모든 카테고리 페이지

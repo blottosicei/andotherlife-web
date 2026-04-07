@@ -1,0 +1,23 @@
+{
+  "categorySlug": "mental-health",
+  "targetAudience": "client",
+  "status": "draft",
+  "skipImage": false,
+  "content": {
+    "title": "글 제목",
+    "slug": "url-slug",
+    "content": "## H2 제목\n\n본문 내용...",
+    "excerpt": "155자 이내 발췌",
+    "summary": "200~400자 요약",
+    "keywords": ["키워드1", "키워드2"],
+    "meta_title": "SEO 메타 타이틀",
+    "meta_description": "SEO 메타 디스크립션",
+    "faq": [
+      {"question": "질문?", "answer": "답변"}
+    ],
+    "references": [
+      {"name": "기관명", "url": "https://...", "type": "academic", "description": "설명"}
+    ],
+    "visual_keywords": ["calming", "nature", "meditation"]
+  }
+}

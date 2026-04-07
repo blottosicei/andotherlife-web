@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# oh-my-claudecode state
+.omc/
+
+# business planning docs (sensitive)
+andotherlife-*.md
+
+# script output files
+scripts/content.json
+scripts/review-feedback.json
+scripts/failed-links.json

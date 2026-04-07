@@ -220,6 +220,8 @@ SEO 퍼스트 원칙에 따라 건설된 심리상담 전문 콘텐츠 플랫폼
 - **수락 기준:**
   - 본문 400~600자 지점에 자동 삽입
   - 콘텐츠 주제와 연관된 CTA 텍스트
+  - `program` prop을 받아 매칭된 상담 프로그램이 있으면 `/counseling/{slug}`로 링크
+  - 매칭된 프로그램 없으면 consultation → `/counseling`, education → `/programs`
   - 카테고리별 다른 버튼 텍스트/색상
   - 반응형: 모바일 전체 너비, 데스크탑 본문 너비
 - **관련 컴포넌트:** `InlineCTA.tsx`
@@ -231,7 +233,8 @@ SEO 퍼스트 원칙에 따라 건설된 심리상담 전문 콘텐츠 플랫폼
   - 포스트 하단에 고정 배치
   - 카테고리별 다른 CTA 텍스트/색상
   - 배경 이미지 또는 그라디언트
-  - "상담 예약하기" / "교육 신청하기" 버튼
+  - `program` prop을 받아 매칭된 상담 프로그램이 있으면 프로그램의 `cta_heading`, `cta_button_text` 사용 + `/counseling/{slug}`로 링크
+  - 매칭된 프로그램 없으면 `/counseling` (consultation) 또는 `/programs` (education)으로 링크
 - **관련 컴포넌트:** `BottomCTA.tsx`
 
 #### [FR-016] 사이드바 CTA 위젯
@@ -477,6 +480,23 @@ SEO 퍼스트 원칙에 따라 건설된 심리상담 전문 콘텐츠 플랫폼
 - **API 사양:** Nano Banana 2 API (Google Gemini 기반)
 - **비용 최적화:** Batch API 사용으로 50% 비용 절감
 
+#### [FR-032] 상담 프로그램 페이지
+- **우선순위:** P1
+- **설명:** 상담 프로그램 목록 및 개별 상담 프로그램 소개 페이지 (블로그 → 상담 예약 전환 퍼널 중간 단계)
+- **수락 기준:**
+  - `/counseling`: 상담 프로그램 카드 그리드 목록 (썸네일, 제목, 부제목, 대상, CTA 버튼)
+  - `/counseling/[slug]`: 각 상담 프로그램 상세 소개 페이지 (정적 코드 파일, DB 비의존)
+    - 초기 구현: 부부상담(`/counseling/couple`), 2030상담(`/counseling/young-adult`)
+    - 각 페이지는 풀 디자인 자유도의 정적 코드 — DB에서 동적 렌더링하지 않음
+  - 하단 CTA → `/contact` (상담 예약 폼)
+  - SEO: `generateMetadata`, `BreadcrumbList` Schema
+- **하이브리드 접근:**
+  - DB(`counseling_programs`)는 CTA 매칭 + 목록 카드 표시 용도로만 사용
+  - 상세 페이지는 디자인 자유도를 위해 정적 코드 파일로 구현
+- **관련 페이지:** `/counseling`, `/counseling/[slug]`
+- **관련 DB:** `counseling_programs`
+- **관련 컴포넌트:** `CounselingCard.tsx`, `app/counseling/page.tsx`, `app/counseling/couple/page.tsx`, `app/counseling/young-adult/page.tsx`
+
 ---
 
 ## 3. 비기능 요구사항 (Non-Functional Requirements)
@@ -622,6 +642,26 @@ SEO 퍼스트 원칙에 따라 건설된 심리상담 전문 콘텐츠 플랫폼
 
 ```sql
 -- ============================================================
+-- 0. 상담 프로그램 (counseling_programs) — CTA 매칭 + 목록 카드용
+-- ============================================================
+CREATE TABLE counseling_programs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug TEXT UNIQUE NOT NULL,              -- URL 슬러그 (예: 'couple', 'young-adult')
+  title TEXT NOT NULL,                    -- "부부상담 프로그램"
+  subtitle TEXT,                          -- "함께 성장하는 관계를 위한 전문 상담"
+  cta_heading TEXT,                       -- CTA 제목 (예: "관계가 힘드신가요?")
+  cta_button_text TEXT,                   -- CTA 버튼 텍스트 (예: "부부상담 알아보기")
+  match_keywords TEXT[] DEFAULT '{}',     -- 포스트 키워드와 자동 매칭용 키워드 배열
+  is_active BOOLEAN DEFAULT TRUE,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+-- 참고: 상세 페이지 콘텐츠(소개, 진행 과정 등)는 정적 코드 파일에서 관리
+
+CREATE INDEX idx_counseling_programs_slug ON counseling_programs(slug);
+CREATE INDEX idx_counseling_programs_active ON counseling_programs(is_active, sort_order);
+
+-- ============================================================
 -- 1. 카테고리 (categories)
 -- ============================================================
 CREATE TABLE categories (
@@ -631,6 +671,7 @@ CREATE TABLE categories (
   description TEXT,                       -- 카테고리 설명
   target_audience TEXT,                   -- 'client' | 'professional'
   default_cta_type TEXT,                  -- 'consultation' | 'education' | 'newsletter'
+  default_program_id UUID REFERENCES counseling_programs(id), -- 태그 매칭 실패 시 폴백
   seo_title TEXT,                         -- 카테고리 페이지 SEO 타이틀
   seo_description TEXT,                   -- 카테고리 페이지 SEO 디스크립션
   sort_order INTEGER DEFAULT 0,
@@ -690,6 +731,7 @@ CREATE TABLE posts (
   schema_markup JSONB,                    -- 구조화 데이터 (Article, FAQPage Schema JSON-LD)
   references JSONB DEFAULT '[]'::jsonb,   -- 참고 자료 [{name, url, type(Tier1/2/3), description}]
   cta_type TEXT DEFAULT 'consultation',   -- 'consultation' | 'education' | 'newsletter'
+  counseling_program_id UUID REFERENCES counseling_programs(id), -- 발행 시 자동 매칭된 상담 프로그램
   reading_time INTEGER,                   -- 읽기 시간 (분)
   view_count INTEGER DEFAULT 0,           -- 조회수
   is_featured BOOLEAN DEFAULT FALSE,      -- 인기글/추천글 여부
@@ -829,6 +871,21 @@ CREATE POLICY newsletter_subscribers_admin_select ON newsletter_subscribers FOR 
 ### 5.2 데이터 모델 다이어그램
 
 ```
+┌───────────────────────┐
+│  counseling_programs  │
+├───────────────────────┤
+│ id (PK)               │
+│ slug (UNIQUE)         │
+│ title                 │
+│ subtitle              │
+│ cta_heading           │
+│ cta_button_text       │
+│ match_keywords[]      │
+│ is_active             │
+│ sort_order            │
+└───────────────────────┘
+        ▲ (FK: default_program_id)
+        │
 ┌──────────────────┐
 │   categories     │
 ├──────────────────┤
@@ -837,6 +894,7 @@ CREATE POLICY newsletter_subscribers_admin_select ON newsletter_subscribers FOR 
 │ slug (UNIQUE)    │
 │ target_audience  │◄─────────┐
 │ default_cta_type │          │
+│ default_program_id│         │
 │ seo_title        │          │
 │ seo_description  │          │
 └──────────────────┘          │
@@ -861,6 +919,9 @@ CREATE POLICY newsletter_subscribers_admin_select ON newsletter_subscribers FOR 
 │ schema_markup│                │  │
 │ references   │                │  │
 │ cta_type     │                │  │
+│ counseling_  │                │  │
+│ program_id──►│counseling_     │  │
+│              │programs        │  │
 │ status       │                │  │
 │ published_at │                │  │
 │ updated_at   │                │  │
@@ -1033,6 +1094,7 @@ CREATE POLICY newsletter_subscribers_admin_select ON newsletter_subscribers FOR 
 - CTA 시스템 [FR-013~FR-018]
   - InlineCTA, BottomCTA, SidebarCTA, FloatingCTA, NewsletterPopup
   - 카테고리별 CTA 분기 로직
+  - InlineCTA/BottomCTA에 `program` prop 추가 (counseling_program_id 기반 링크 분기)
 - 폼 구현 [FR-020~FR-022]
   - ContactForm, ProgramForm, NewsletterForm
   - React Hook Form + Zod 검증
@@ -1047,10 +1109,20 @@ CREATE POLICY newsletter_subscribers_admin_select ON newsletter_subscribers FOR 
 
 ---
 
-### Sprint 5: 성능 최적화 + QA (1주)
-**목표:** Core Web Vitals 달성, 크로스 브라우저 테스트
+### Sprint 5: 상담 프로그램 페이지 + 성능 최적화 + QA (2주)
+**목표:** 상담 프로그램 전환 퍼널 구현 및 Core Web Vitals 달성
 
 **태스크:**
+- 상담 프로그램 시스템 [FR-032]
+  - `counseling_programs` DB 테이블 마이그레이션
+  - `categories.default_program_id`, `posts.counseling_program_id` 컬럼 추가
+  - `/counseling` 목록 페이지 (DB에서 카드 조회)
+  - `/counseling/couple` 정적 상세 페이지
+  - `/counseling/young-adult` 정적 상세 페이지
+  - Header 네비게이션에 "상담 프로그램" 메뉴 추가
+  - InlineCTA/BottomCTA `program` prop 연동
+  - 사이트맵에 `/counseling`, `/counseling/{slug}` 추가
+  - 발행 파이프라인에 `counseling_program_id` 자동 매칭 로직 추가
 - Core Web Vitals 최적화 [FR-012]
   - Next.js Image Optimization
   - 폰트 로딩 최적화
