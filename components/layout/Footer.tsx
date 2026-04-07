@@ -137,13 +137,13 @@ export async function Footer() {
           </p>
           <div className="mt-2 flex justify-center gap-4">
             <Link
-              href="#"
+              href="/privacy"
               className="text-xs text-[#5c605d] hover:text-[#9c9d9b] transition-colors"
             >
               개인정보처리방침
             </Link>
             <Link
-              href="#"
+              href="/terms"
               className="text-xs text-[#5c605d] hover:text-[#9c9d9b] transition-colors"
             >
               이용약관
