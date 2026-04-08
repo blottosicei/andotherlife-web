@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     ...generatePageMetadata({
       title: PROGRAMS_MAP[slug] || slug,
-      description: '앤아더라이프 심리상담연구소 교육 프로그램 상세 안내',
+      description: '앤아더라이프 심리상담연구소 상담사 교육 상세 안내',
       path: `/programs/${slug}`,
     }),
     robots: { index: false, follow: true },
@@ -31,7 +31,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '홈', url: SITE_CONFIG.url },
-    { name: '교육 프로그램', url: `${SITE_CONFIG.url}/programs` },
+    { name: '상담사 교육', url: `${SITE_CONFIG.url}/programs` },
     { name: PROGRAMS_MAP[slug] || slug, url: `${SITE_CONFIG.url}/programs/${slug}` },
   ]);
 
@@ -41,7 +41,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
       <main className="mx-auto max-w-[1280px] px-4 py-12">
         <Breadcrumb
           items={[
-            { label: '교육 프로그램', href: '/programs' },
+            { label: '상담사 교육', href: '/programs' },
             { label: PROGRAMS_MAP[slug] || slug },
           ]}
         />

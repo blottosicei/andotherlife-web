@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MobileMenu } from './MobileMenu';
@@ -11,13 +13,33 @@ const NAV_ITEMS = [
   { href: '/counseling', label: '상담 프로그램' },
   { href: '/about', label: '센터소개' },
   { href: '/team', label: '교수진' },
-  { href: '/programs', label: '교육프로그램' },
+  { href: '/programs', label: '상담사 교육' },
   { href: '/contact', label: '상담예약' },
 ];
+
+const COUNSELING_SLUG_TO_TITLE: Record<string, string> = {
+  individual: '개인상담 (성인)',
+  couple: '부부상담 프로그램',
+  'child-youth': '아동·청소년 상담',
+  family: '가족상담',
+  'young-adult': '2030 청년상담 프로그램',
+  eap: 'EAP(기업)상담',
+  'social-contribution': '사회공헌상담',
+  'psychological-testing': '심리검사',
+};
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  const contactHref = useMemo(() => {
+    const match = pathname.match(/^\/counseling\/([^/]+)/);
+    if (match && COUNSELING_SLUG_TO_TITLE[match[1]]) {
+      return `/contact?type=${encodeURIComponent(COUNSELING_SLUG_TO_TITLE[match[1]])}`;
+    }
+    return '/contact';
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -36,8 +58,15 @@ export function Header() {
         )}
       >
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:px-6">
-          <Link href="/" className="font-dangam text-xl text-[#2d6a4f]">
-            앤아더라이프
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/logo-text.webp"
+              alt="앤아더라이프 심리상담연구소"
+              width={140}
+              height={40}
+              className="h-9 w-auto"
+              priority
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-6" aria-label="주 메뉴">
@@ -54,7 +83,7 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/contact"
+              href={contactHref}
               className="hidden md:inline-flex items-center rounded-lg bg-[#8c4f36] px-4 py-2 text-sm font-medium text-white hover:bg-[#7d432b] transition-colors"
             >
               상담 예약하기
@@ -73,6 +102,7 @@ export function Header() {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         items={NAV_ITEMS}
+        contactHref={contactHref}
       />
     </>
   );

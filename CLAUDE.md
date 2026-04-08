@@ -23,7 +23,7 @@ app/           → Next.js App Router 페이지
   counseling/  → 상담 프로그램 (목록 + 정적 상세: couple, young-adult)
   about/       → 센터 소개
   team/        → 교수진
-  programs/    → 교육 프로그램
+  programs/    → 상담사 교육
   contact/     → 상담 예약 폼
 components/    → 재사용 컴포넌트 (layout, blog, counseling, cta, forms, home, seo, ui)
 lib/           → 유틸리티 (supabase, seo, markdown, utils)
@@ -142,7 +142,7 @@ npm run lint     # ESLint 검사
 
 ## 네비게이션
 ```
-홈 | 블로그 | 상담 프로그램 | 센터소개 | 교수진 | 교육프로그램 | 상담예약
+홈 | 블로그 | 상담 프로그램 | 센터소개 | 교수진 | 상담사 교육 | 상담예약
 ```
 
 ## 카테고리 (7개)

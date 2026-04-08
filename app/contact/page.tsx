@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/accordion';
 import { Phone, Mail, Clock, MessageCircle, MapPin } from 'lucide-react';
 import { NaverMap } from '@/components/common/NaverMap';
+import { getCounselingPrograms } from '@/lib/supabase/queries';
 import { SITE_CONFIG } from '@/constants/site';
 
 export const metadata: Metadata = generatePageMetadata({
@@ -83,7 +84,13 @@ const FAQ_ITEMS = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>;
+}) {
+  const { type: defaultType } = await searchParams;
+  const programs = await getCounselingPrograms();
   const orgSchema = generateOrganizationSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: '홈', url: SITE_CONFIG.url },
@@ -109,7 +116,7 @@ export default function ContactPage() {
           <div className="lg:col-span-3">
             <div className="rounded-2xl border border-[#e8ede9] bg-white p-6 shadow-sm md:p-8">
               <h2 className="mb-6 text-lg font-semibold text-[#2f3331]">상담 문의 양식</h2>
-              <ContactForm />
+              <ContactForm programs={programs} defaultType={defaultType} />
             </div>
           </div>
 
@@ -123,12 +130,9 @@ export default function ContactPage() {
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#2d6a4f]" />
                   <div>
                     <p className="text-xs text-[#5c605d]">전화</p>
-                    <a
-                      href={`tel:${SITE_CONFIG.phone || ''}`}
-                      className="text-sm font-medium text-[#2f3331] hover:text-[#2d6a4f] transition-colors"
-                    >
-                      {SITE_CONFIG.phone || '전화번호 준비중'}
-                    </a>
+                    <p className="text-sm font-medium text-[#2f3331]">
+                      {SITE_CONFIG.phone || '070-8989-7532'}
+                    </p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">

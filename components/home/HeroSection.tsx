@@ -1,28 +1,48 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f5f2] via-[#f5f0e8] to-[#fdf9f4] py-20 md:py-28 lg:py-36">
-      <div className="mx-auto max-w-[1280px] px-4 md:px-6">
+    <section className="relative overflow-hidden py-24 md:py-32 lg:py-40">
+      {/* Background image */}
+      <Image
+        src="/images/hero-bg.webp"
+        alt=""
+        fill
+        className="object-cover"
+        priority
+        aria-hidden="true"
+      />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0f0d]/70 via-[#0d0f0d]/50 to-[#0d0f0d]/20" />
+
+      <div className="relative mx-auto max-w-[1280px] px-4 md:px-6">
         <div className="max-w-2xl">
-          <h1 className="font-dangam text-[36px] leading-[1.2] text-[#2d6a4f] md:text-[48px]">
+          <p className="mb-4 text-sm font-medium tracking-widest text-[#b1f0ce]/80 uppercase">
+            심리상담연구소 앤아더라이프
+          </p>
+          <h1 className="font-dangam text-[36px] leading-[1.2] text-white md:text-[52px]">
             당신의 마음을 돌보는 것이{' '}
             <br className="hidden md:block" />
             우리의 일입니다
           </h1>
-          <p className="mt-4 text-lg text-[#5c605d] md:text-xl">
-            전문 심리상담사와 함께 마음건강을 시작하세요
+          <p className="mt-4 font-dangam text-lg text-white/60 md:text-xl">
+            &lsquo;그리고&rsquo; 다른 삶 &lsquo;&amp; Other Life&rsquo;
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
+            전문 심리상담사와 함께 마음건강을 시작하세요.
+            보웬가족체계치료와 구조적가족치료를 기반으로 관계의 근본적 변화를 이끕니다.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-xl bg-[#2d6a4f] px-6 py-3 text-base font-medium text-white hover:bg-[#1f5e44] transition-colors"
+              className="inline-flex items-center justify-center rounded-xl bg-white px-7 py-3.5 text-base font-semibold text-[#2d6a4f] shadow-lg hover:bg-[#f0f5f2] transition-colors"
             >
               상담 예약하기
             </Link>
             <Link
               href="/blog"
-              className="inline-flex items-center justify-center rounded-xl border border-[#2d6a4f] px-6 py-3 text-base font-medium text-[#2d6a4f] hover:bg-[#2d6a4f]/5 transition-colors"
+              className="inline-flex items-center justify-center rounded-xl border border-white/30 px-7 py-3.5 text-base font-medium text-white hover:bg-white/10 transition-colors"
             >
               블로그 둘러보기
             </Link>

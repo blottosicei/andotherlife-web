@@ -68,7 +68,8 @@ export async function getAuthors() {
   const { data, error } = await supabase
     .from('authors')
     .select('*')
-    .order('name', { ascending: true });
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true });
   if (error) throw error;
   return data ?? [];
 }

@@ -26,8 +26,8 @@ const SERVICES = [
       '사례개념화 연수',
     ],
     image: '/images/service-education.webp',
-    imageAlt: '전문가 교육 프로그램 일러스트',
-    cta: { label: '교육 프로그램 보기', href: '/programs' },
+    imageAlt: '상담사 교육 프로그램 일러스트',
+    cta: { label: '상담사 교육 보기', href: '/programs' },
   },
   {
     title: '2030 청년상담',

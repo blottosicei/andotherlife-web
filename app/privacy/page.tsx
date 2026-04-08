@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-1">
               <li>상담 예약 및 문의 접수</li>
-              <li>교육 프로그램 수강 신청</li>
+              <li>상담사 교육 수강 신청</li>
               <li>뉴스레터 발송</li>
               <li>서비스 개선 및 통계 분석</li>
             </ul>

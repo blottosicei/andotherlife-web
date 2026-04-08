@@ -181,7 +181,7 @@ export default function FamilyCounselingPage() {
           <h2 className="text-xl">가족 관계, 혼자 해결하지 않아도 됩니다.</h2>
           <p className="mt-2 text-[#5c605d]">전문 상담사가 가족의 이야기를 함께 듣겠습니다.</p>
           <Link
-            href="/contact"
+            href={`/contact?type=${encodeURIComponent('가족상담')}`}
             className="mt-6 inline-flex items-center rounded-lg bg-[#2d6a4f] px-6 py-3 text-base font-medium text-white hover:bg-[#1f5e44] transition-colors"
           >
             상담 예약하기 <ArrowRight className="ml-2 h-4 w-4" />

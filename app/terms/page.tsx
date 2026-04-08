@@ -40,7 +40,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-1">
               <li>심리상담 정보 제공 (블로그, 콘텐츠)</li>
               <li>상담 프로그램 안내 및 예약 접수</li>
-              <li>교육 프로그램 안내 및 수강 신청</li>
+              <li>상담사 교육 안내 및 수강 신청</li>
               <li>뉴스레터 발송</li>
             </ul>
           </section>

@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
   name: '앤아더라이프 심리상담연구소',
   shortName: '앤아더라이프',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com',
-  email: process.env.NEXT_PUBLIC_SITE_EMAIL || 'info@andtoherlife.com',
+  email: process.env.NEXT_PUBLIC_SITE_EMAIL || 'business@mindfullabs.ai',
   phone: process.env.NEXT_PUBLIC_SITE_PHONE || '',
   description: '앤아더라이프 심리상담연구소 - 전문 심리상담과 가족치료, 부부상담, 아동청소년상담을 제공합니다.',
   locale: 'ko_KR',
@@ -16,8 +16,8 @@ export const SITE_CONFIG = {
     full: '서울시 마포구 잔다리로 73, 5층',
   },
   geo: {
-    latitude: 37.5509,
-    longitude: 126.9176,
+    latitude: 37.5540,
+    longitude: 126.9164,
   },
   hours: {
     weekday: { open: '10:00', close: '19:00' },

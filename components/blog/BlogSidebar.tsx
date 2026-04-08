@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getPopularPosts, getCategories } from '@/lib/supabase/queries';
+import { NewsletterForm } from '@/components/forms/NewsletterForm';
 
 export async function BlogSidebar() {
   const [popularPosts, categories] = await Promise.all([
@@ -57,24 +58,7 @@ export async function BlogSidebar() {
         <p className="text-sm text-[#5c605d] mb-4">
           마음건강 콘텐츠를 이메일로 받아보세요
         </p>
-        <form
-          action="/api/newsletter"
-          method="POST"
-          className="flex flex-col gap-2"
-        >
-          <input
-            type="email"
-            name="email"
-            placeholder="이메일 주소를 입력하세요"
-            className="w-full rounded-lg border border-[#afb3af] bg-white px-3 py-2 text-sm text-[#2f3331] placeholder:text-[#afb3af] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-[#347756] transition-colors"
-          >
-            구독하기
-          </button>
-        </form>
+        <NewsletterForm />
       </div>
     </aside>
   );

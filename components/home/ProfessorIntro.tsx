@@ -17,9 +17,11 @@ const CAREER = [
 ];
 
 const PUBLICATIONS = [
+  '가계도: 사정 및 평가 (2026)',
+  '가족상담 (2026)',
   '보웬이론의 비밀 (2025)',
-  '한국 부부가족상담 핸드북 (2025)',
   '미누친의 가족치료 마스터하기 (2022)',
+  '대인관계 의사소통 (2022) 외 다수',
 ];
 
 export function ProfessorIntro() {
@@ -32,7 +34,7 @@ export function ProfessorIntro() {
             <div className="relative">
               <div className="absolute -bottom-4 -right-4 h-full w-full rounded-2xl bg-[#2d6a4f]/10" />
               <Image
-                src="/images/profile_Lee.png"
+                src="/images/profile_Lee.webp"
                 alt="이인수 대표"
                 width={400}
                 height={500}

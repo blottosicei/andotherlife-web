@@ -171,7 +171,7 @@ export default function IndividualCounselingPage() {
           <h2 className="text-xl">혼자 감당하지 않아도 됩니다.</h2>
           <p className="mt-2 text-[#5c605d]">전문 상담사가 함께 이야기를 들어드립니다.</p>
           <Link
-            href="/contact"
+            href={`/contact?type=${encodeURIComponent('개인상담 (성인)')}`}
             className="mt-6 inline-flex items-center rounded-lg bg-[#2d6a4f] px-6 py-3 text-base font-medium text-white hover:bg-[#1f5e44] transition-colors"
           >
             상담 예약하기 <ArrowRight className="ml-2 h-4 w-4" />

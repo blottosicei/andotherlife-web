@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getCounselingPrograms } from '@/lib/supabase/queries';
 import { SITE_CONFIG } from '@/constants/site';
 
@@ -27,8 +28,14 @@ export async function Footer() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="font-dangam text-lg text-white">
-              앤아더라이프
+            <Link href="/" className="inline-block">
+              <Image
+                src="/images/logo-text.webp"
+                alt="앤아더라이프 심리상담연구소"
+                width={140}
+                height={40}
+                className="h-9 w-auto brightness-0 invert"
+              />
             </Link>
             <p className="mt-1 text-sm text-[#9c9d9b]">심리상담연구소</p>
             <p className="mt-3 text-xs leading-relaxed text-[#9c9d9b]">
@@ -87,7 +94,7 @@ export async function Footer() {
           {/* Education */}
           <div>
             <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#afb3af]">
-              교육 프로그램
+              상담사 교육
             </h3>
             <ul className="space-y-1.5">
               <li>

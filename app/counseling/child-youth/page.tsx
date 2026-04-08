@@ -172,7 +172,7 @@ export default function ChildYouthCounselingPage() {
           <h2 className="text-xl">아이의 어려움, 함께 해결해드립니다.</h2>
           <p className="mt-2 text-[#5c605d]">전문 상담사가 아이와 가족을 지원합니다.</p>
           <Link
-            href="/contact"
+            href={`/contact?type=${encodeURIComponent('아동·청소년 상담')}`}
             className="mt-6 inline-flex items-center rounded-lg bg-[#2d6a4f] px-6 py-3 text-base font-medium text-white hover:bg-[#1f5e44] transition-colors"
           >
             상담 예약하기 <ArrowRight className="ml-2 h-4 w-4" />

@@ -7,9 +7,10 @@ export async function submitContactInquiry(formData: FormData) {
   const raw = {
     name: formData.get('name') as string,
     phone: formData.get('phone') as string,
-    email: formData.get('email') as string,
+    birth_date: formData.get('birth_date') as string,
     counseling_type: formData.get('counseling_type') as string,
-    preferred_date: (formData.get('preferred_date') as string) || undefined,
+    counseling_method: formData.get('counseling_method') as string,
+    preferred_days: JSON.parse((formData.get('preferred_days') as string) || '[]') as string[],
     message: formData.get('message') as string,
   };
 
@@ -24,9 +25,10 @@ export async function submitContactInquiry(formData: FormData) {
     const { error } = await (supabase as any).from('contact_inquiries').insert({
       name: parsed.data.name,
       phone: parsed.data.phone,
-      email: parsed.data.email,
+      birth_date: parsed.data.birth_date,
       counseling_type: parsed.data.counseling_type,
-      preferred_date: parsed.data.preferred_date || null,
+      counseling_method: parsed.data.counseling_method,
+      preferred_days: parsed.data.preferred_days,
       message: parsed.data.message,
     });
 

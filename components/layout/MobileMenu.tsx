@@ -2,15 +2,17 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { X } from 'lucide-react';
 
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
   items: { href: string; label: string }[];
+  contactHref?: string;
 }
 
-export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, items, contactHref = '/contact' }: MobileMenuProps) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -27,8 +29,14 @@ export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
   return (
     <div className="fixed inset-0 z-[60] bg-white">
       <div className="flex h-16 items-center justify-between px-4">
-        <Link href="/" className="font-dangam text-xl text-[#2d6a4f]" onClick={onClose}>
-          앤아더라이프
+        <Link href="/" className="flex items-center" onClick={onClose}>
+          <Image
+            src="/images/logo-text.webp"
+            alt="앤아더라이프 심리상담연구소"
+            width={140}
+            height={40}
+            className="h-9 w-auto"
+          />
         </Link>
         <button onClick={onClose} className="p-2 text-[#2f3331]" aria-label="메뉴 닫기">
           <X className="h-6 w-6" />
@@ -46,7 +54,7 @@ export function MobileMenu({ open, onClose, items }: MobileMenuProps) {
           </Link>
         ))}
         <Link
-          href="/contact"
+          href={contactHref}
           onClick={onClose}
           className="mt-4 rounded-lg bg-[#8c4f36] px-4 py-3 text-center text-lg font-medium text-white"
         >

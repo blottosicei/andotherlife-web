@@ -204,7 +204,7 @@
 
 ### 32. 이메일 주소 불일치
 - `/about`: `business@mindfullabs.ai` (폴백)
-- `/contact`: `info@andtoherlife.com` (하드코딩)
+- `/contact`: `business@mindfullabs.ai` (하드코딩)
 - **수정:** `SITE_CONFIG.email`로 통일
 
 ---

@@ -44,19 +44,9 @@ export function NewsletterForm() {
           id="newsletter-email"
           type="email"
           name="email"
-          placeholder="이메일 주소"
+          placeholder="이메일 주소를 입력하세요"
           required
-          className="h-9 w-full text-sm"
-        />
-      </div>
-      <div>
-        <label htmlFor="newsletter-name" className="sr-only">이름 (선택)</label>
-        <Input
-          id="newsletter-name"
-          type="text"
-          name="name"
-          placeholder="이름 (선택)"
-          className="h-9 w-full text-sm"
+          className="h-9 w-full bg-white text-sm"
         />
       </div>
       {submitStatus === 'error' && (
@@ -67,7 +57,7 @@ export function NewsletterForm() {
         disabled={isSubmitting}
         className="h-9 w-full bg-[#2d6a4f] text-white hover:bg-[#245a41] disabled:opacity-60 text-sm"
       >
-        {isSubmitting ? '처리 중...' : '뉴스레터 구독'}
+        {isSubmitting ? '처리 중...' : '구독하기'}
       </Button>
     </form>
   );

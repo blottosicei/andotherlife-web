@@ -3,20 +3,23 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { contactFormSchema, type ContactFormData } from '@/lib/validations/contact';
+import { contactFormSchema, type ContactFormData, WEEKDAYS, COUNSELING_METHODS } from '@/lib/validations/contact';
 import { submitContactInquiry } from '@/app/contact/actions';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-const COUNSELING_TYPES = [
-  { value: '개인상담', label: '개인상담' },
-  { value: '부부상담', label: '부부상담' },
-  { value: '아동상담', label: '아동상담' },
-  { value: '집단상담', label: '집단상담' },
-  { value: '기타', label: '기타' },
-];
+interface CounselingProgram {
+  id: string;
+  title: string;
+  slug: string;
+}
 
-export function ContactForm() {
+interface ContactFormProps {
+  programs?: CounselingProgram[];
+  defaultType?: string;
+}
+
+export function ContactForm({ programs = [], defaultType }: ContactFormProps) {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,6 +30,9 @@ export function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      counseling_type: defaultType ?? '',
+    },
   });
 
   const onSubmit = async (data: ContactFormData) => {
@@ -34,9 +40,10 @@ export function ContactForm() {
     const formData = new FormData();
     formData.set('name', data.name);
     formData.set('phone', data.phone);
-    formData.set('email', data.email);
+    formData.set('birth_date', data.birth_date);
     formData.set('counseling_type', data.counseling_type);
-    if (data.preferred_date) formData.set('preferred_date', data.preferred_date);
+    formData.set('counseling_method', data.counseling_method);
+    formData.set('preferred_days', JSON.stringify(data.preferred_days));
     formData.set('message', data.message);
 
     const result = await submitContactInquiry(formData);
@@ -86,21 +93,20 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* 이메일 */}
+      {/* 생년월일 */}
       <div className="space-y-1.5">
-        <label htmlFor="email" className="block text-sm font-medium text-[#2f3331]">
-          이메일 <span className="text-red-500">*</span>
+        <label htmlFor="birth_date" className="block text-sm font-medium text-[#2f3331]">
+          생년월일 <span className="text-red-500">*</span>
         </label>
         <Input
-          id="email"
-          type="email"
-          placeholder="example@email.com"
+          id="birth_date"
+          type="date"
           className="h-10 w-full"
-          aria-invalid={!!errors.email}
-          {...register('email')}
+          aria-invalid={!!errors.birth_date}
+          {...register('birth_date')}
         />
-        {errors.email && (
-          <p className="text-xs text-red-500">{errors.email.message}</p>
+        {errors.birth_date && (
+          <p className="text-xs text-red-500">{errors.birth_date.message}</p>
         )}
       </div>
 
@@ -116,28 +122,68 @@ export function ContactForm() {
           {...register('counseling_type')}
         >
           <option value="">상담 유형을 선택해주세요</option>
-          {COUNSELING_TYPES.map((type) => (
-            <option key={type.value} value={type.value}>
-              {type.label}
+          {programs.map((program) => (
+            <option key={program.id} value={program.title}>
+              {program.title}
             </option>
           ))}
+          <option value="기타">기타</option>
         </select>
         {errors.counseling_type && (
           <p className="text-xs text-red-500">{errors.counseling_type.message}</p>
         )}
       </div>
 
-      {/* 희망 일시 */}
+      {/* 상담 방식 */}
       <div className="space-y-1.5">
-        <label htmlFor="preferred_date" className="block text-sm font-medium text-[#2f3331]">
-          희망 일시 <span className="text-xs text-[#5c605d] font-normal">(선택)</span>
+        <label className="block text-sm font-medium text-[#2f3331]">
+          상담 방식 <span className="text-red-500">*</span>
         </label>
-        <Input
-          id="preferred_date"
-          type="datetime-local"
-          className="h-10 w-full"
-          {...register('preferred_date')}
-        />
+        <div className="flex flex-wrap gap-2">
+          {COUNSELING_METHODS.map((method) => (
+            <label
+              key={method}
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-input px-3 py-2 text-sm transition-colors has-[:checked]:border-[#2d6a4f] has-[:checked]:bg-[#b1f0ce]/30 has-[:checked]:text-[#2d6a4f] hover:bg-[#f3f4f0]"
+            >
+              <input
+                type="radio"
+                value={method}
+                className="sr-only"
+                {...register('counseling_method')}
+              />
+              {method}
+            </label>
+          ))}
+        </div>
+        {errors.counseling_method && (
+          <p className="text-xs text-red-500">{errors.counseling_method.message}</p>
+        )}
+      </div>
+
+      {/* 희망 요일 */}
+      <div className="space-y-1.5">
+        <label className="block text-sm font-medium text-[#2f3331]">
+          희망 요일 <span className="text-red-500">*</span>
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {WEEKDAYS.map((day) => (
+            <label
+              key={day}
+              className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-input px-3 py-2 text-sm transition-colors has-[:checked]:border-[#2d6a4f] has-[:checked]:bg-[#b1f0ce]/30 has-[:checked]:text-[#2d6a4f] hover:bg-[#f3f4f0]"
+            >
+              <input
+                type="checkbox"
+                value={day}
+                className="sr-only"
+                {...register('preferred_days')}
+              />
+              {day}
+            </label>
+          ))}
+        </div>
+        {errors.preferred_days && (
+          <p className="text-xs text-red-500">{errors.preferred_days.message}</p>
+        )}
       </div>
 
       {/* 문의 내용 */}

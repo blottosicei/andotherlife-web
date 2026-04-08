@@ -16,8 +16,8 @@ interface NaverMapProps {
   height?: string;
 }
 
-const DEFAULT_LAT = 37.5494;
-const DEFAULT_LNG = 126.9137;
+const DEFAULT_LAT = 37.5540;
+const DEFAULT_LNG = 126.9164;
 const DEFAULT_ADDRESS = '서울시 마포구 잔다리로 73, 5층';
 
 export function NaverMap({
@@ -27,7 +27,6 @@ export function NaverMap({
   height = '400px',
 }: NaverMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const clientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
@@ -37,26 +36,19 @@ export function NaverMap({
       return;
     }
 
-    // 이미 로드되어 있으면 바로 초기화
     if (window.naver?.maps) {
       initMap();
       return;
     }
 
-    // 스크립트 로드
     const script = document.createElement('script');
     script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}`;
     script.async = true;
     script.onload = () => {
-      setIsLoaded(true);
       initMap();
     };
     script.onerror = () => setHasError(true);
     document.head.appendChild(script);
-
-    return () => {
-      // cleanup은 하지 않음 (스크립트는 한번 로드되면 유지)
-    };
   }, [clientId]);
 
   function initMap() {
@@ -72,13 +64,12 @@ export function NaverMap({
       mapDataControl: false,
     });
 
-    new window.naver.maps.Marker({
+    const marker = new window.naver.maps.Marker({
       position,
       map,
       title: '앤아더라이프 심리상담연구소',
     });
 
-    // 정보창
     const infoWindow = new window.naver.maps.InfoWindow({
       content: `
         <div style="padding: 12px 16px; font-size: 13px; line-height: 1.6; min-width: 200px;">
@@ -89,10 +80,9 @@ export function NaverMap({
       `,
     });
 
-    infoWindow.open(map, new window.naver.maps.Marker({ position, map }).getPosition());
+    infoWindow.open(map, marker);
   }
 
-  // API 키 없거나 에러 시 placeholder
   if (hasError || !clientId) {
     return (
       <div
