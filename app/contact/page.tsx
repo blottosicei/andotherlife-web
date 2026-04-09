@@ -174,7 +174,7 @@ export default async function ContactPage({
 
             {/* KakaoTalk button */}
             <a
-              href="https://pf.kakao.com"
+              href="https://pf.kakao.com/_xlFhps"
               target="_blank"
               rel="noopener noreferrer"
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl font-medium text-[#3C1E1E] transition-opacity hover:opacity-90"

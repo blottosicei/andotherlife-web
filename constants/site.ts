@@ -25,7 +25,7 @@ export const SITE_CONFIG = {
     sunday: null,
   },
   social: {
-    kakao: process.env.NEXT_PUBLIC_KAKAO_CHANNEL || 'https://pf.kakao.com',
+    kakao: process.env.NEXT_PUBLIC_KAKAO_CHANNEL || 'https://pf.kakao.com/_xlFhps',
     naver: process.env.NEXT_PUBLIC_NAVER_BLOG || '',
     instagram: process.env.NEXT_PUBLIC_INSTAGRAM || '',
   },
