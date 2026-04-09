@@ -7,6 +7,7 @@ import { contactFormSchema, type ContactFormData, WEEKDAYS, COUNSELING_METHODS }
 import { submitContactInquiry } from '@/app/contact/actions';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { trackGenerateLead, trackBeginForm } from '@/lib/analytics/gtag';
 
 interface CounselingProgram {
   id: string;
@@ -22,6 +23,7 @@ interface ContactFormProps {
 export function ContactForm({ programs = [], defaultType }: ContactFormProps) {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [formStarted, setFormStarted] = useState(false);
 
   const {
     register,
@@ -48,6 +50,7 @@ export function ContactForm({ programs = [], defaultType }: ContactFormProps) {
 
     const result = await submitContactInquiry(formData);
     if (result.success) {
+      trackGenerateLead(data.counseling_type);
       setSubmitStatus('success');
       reset();
     } else {
@@ -57,7 +60,16 @@ export function ContactForm({ programs = [], defaultType }: ContactFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-5"
+      onFocus={() => {
+        if (!formStarted) {
+          setFormStarted(true);
+          trackBeginForm();
+        }
+      }}
+    >
       {/* 이름 */}
       <div className="space-y-1.5">
         <label htmlFor="name" className="block text-sm font-medium text-[#2f3331]">
