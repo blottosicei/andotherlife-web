@@ -79,11 +79,9 @@
 - **영향:** 첫 방문자 LCP 성능 저하, Googlebot 크롤 시 느린 응답
 - **수정:** 각 동적 페이지에 `generateStaticParams` export 추가
 
-### 7. Content Security Policy (CSP) 헤더 없음 [기술]
-- **파일:** `next.config.ts:3-28`
-- 다른 보안 헤더는 있으나 CSP 없음
-- **영향:** XSS 방어 부재, 블로그 마크다운 콘텐츠 주입 위험
-- **수정:** CSP 헤더 추가 (Naver Maps, Supabase 도메인 허용)
+### 7. ~~Content Security Policy (CSP) 헤더~~ [제거 결정]
+- **결정:** CSP 헤더 제거 (2026-04-09)
+- **사유:** 사용자 입력 HTML 기능 없어 XSS 위험 낮음. GA, Meta Pixel, 네이버 지도 등 외부 서비스 연동 시마다 차단 문제 반복 발생. 운영 비용 대비 보안 이점 미미. HSTS, X-Frame-Options 등 기타 보안 헤더는 유지.
 
 ---
 
@@ -240,7 +238,7 @@
 ### Phase 2: 단기 (1주) — High 이슈
 ```
 [ ] generateStaticParams 구현 (모든 동적 라우트)
-[ ] CSP 헤더 추가
+[x] CSP 헤더 — 제거 결정 (외부 서비스 연동 충돌, XSS 위험 낮음)
 [ ] 사이트맵에 정적 상담 페이지 추가
 [ ] WebSite 스키마 + SearchAction 추가
 [ ] Organization 스키마 보완 (logo, sameAs, @id)
