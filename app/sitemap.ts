@@ -1,23 +1,28 @@
 import type { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://andotherlife.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
-    { url: SITE_URL, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/blog`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/about`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/team`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/programs`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/contact`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/privacy`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/terms`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling/individual`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling/couple`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling/family`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling/child-youth`, lastModified: new Date('2026-04-07') },
-    { url: `${SITE_URL}/counseling/young-adult`, lastModified: new Date('2026-04-07') },
+    { url: SITE_URL, lastModified: new Date('2026-04-07'), changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${SITE_URL}/blog`, lastModified: new Date('2026-04-07'), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/about`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/about/philosophy`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/about/facility`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/team`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/programs`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/contact`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/privacy`, lastModified: new Date('2026-04-07'), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/terms`, lastModified: new Date('2026-04-07'), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/counseling`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${SITE_URL}/counseling/individual`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/couple`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/family`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/child-youth`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/young-adult`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/psychological-testing`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/counseling/social-contribution`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/counseling/eap`, lastModified: new Date('2026-04-07'), changeFrequency: 'monthly', priority: 0.7 },
   ];
 
   let postPages: MetadataRoute.Sitemap = [];
@@ -38,6 +43,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       postPages = posts.map((post: { slug: string; updated_at: string; category: { slug: string } | null }) => ({
         url: `${SITE_URL}/blog/${post.category?.slug || 'uncategorized'}/${post.slug}`,
         lastModified: new Date(post.updated_at),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
       }));
     }
 

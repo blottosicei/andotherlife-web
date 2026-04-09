@@ -1,7 +1,7 @@
 # 앤아더라이프 웹사이트 종합 SEO 감사 보고서
 
 **감사일:** 2026-04-07
-**사이트:** https://andtoherlife.com
+**사이트:** https://notherlife.com
 **기술스택:** Next.js 16 (App Router) + Supabase + Tailwind CSS v4
 **감사방법:** 소스코드 레벨 정적 분석 (claude-seo 4개 전문 에이전트 병렬 감사)
 

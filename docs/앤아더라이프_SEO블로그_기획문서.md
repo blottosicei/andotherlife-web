@@ -655,7 +655,7 @@ CREATE INDEX idx_posts_fulltext ON posts USING GIN(
 ## 10. 프로젝트 디렉토리 구조
 
 ```
-andtoherlife-web/
+andotherlife-web/
 ├── app/
 │   ├── layout.tsx                 # 루트 레이아웃 (글로벌 메타, 폰트, 네비게이션)
 │   ├── page.tsx                   # 홈페이지

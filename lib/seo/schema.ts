@@ -19,7 +19,14 @@ export function generateArticleSchema(post: {
     },
     headline: post.title,
     description: post.excerpt || '',
-    ...(post.thumbnail_url ? { image: post.thumbnail_url } : {}),
+    ...(post.thumbnail_url ? {
+      image: {
+        '@type': 'ImageObject',
+        url: post.thumbnail_url,
+        width: 1200,
+        height: 630,
+      },
+    } : {}),
     datePublished: post.published_at || post.updated_at,
     dateModified: post.updated_at,
     url: post.url,
@@ -34,7 +41,9 @@ export function generateArticleSchema(post: {
       url: SITE_CONFIG.url,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_CONFIG.url}/logo.png`,
+        url: `${SITE_CONFIG.url}/icon.png`,
+        width: 192,
+        height: 192,
       },
     },
     inLanguage: SITE_CONFIG.language,
@@ -87,7 +96,9 @@ export function generateOrganizationSchema() {
     description: SITE_CONFIG.description,
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE_CONFIG.url}/logo.png`,
+      url: `${SITE_CONFIG.url}/icon.png`,
+      width: 192,
+      height: 192,
     },
     ...(sameAs.length > 0 ? { sameAs } : {}),
     contactPoint: {
@@ -103,8 +114,8 @@ export function generateOrganizationSchema() {
 export function generateLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': `${SITE_CONFIG.url}/#organization`,
+    '@type': ['LocalBusiness', 'MedicalBusiness'],
+    '@id': `${SITE_CONFIG.url}/#local-business`,
     name: SITE_CONFIG.name,
     url: SITE_CONFIG.url,
     description: SITE_CONFIG.description,
@@ -112,7 +123,9 @@ export function generateLocalBusinessSchema() {
     ...(SITE_CONFIG.email ? { email: SITE_CONFIG.email } : {}),
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE_CONFIG.url}/logo.png`,
+      url: `${SITE_CONFIG.url}/icon.png`,
+      width: 192,
+      height: 192,
     },
     address: {
       '@type': 'PostalAddress',
@@ -242,7 +255,7 @@ export function generateServiceSchema(service: {
     url: `${SITE_CONFIG.url}/counseling/${service.slug}`,
     provider: {
       '@type': 'LocalBusiness',
-      '@id': `${SITE_CONFIG.url}/#organization`,
+      '@id': `${SITE_CONFIG.url}/#local-business`,
     },
     serviceType: '심리상담',
     areaServed: {

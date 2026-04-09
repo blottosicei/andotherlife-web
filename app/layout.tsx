@@ -1,28 +1,26 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingCTAWrapper } from '@/components/cta/FloatingCTAWrapper';
+import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
+import { generateOrganizationSchema, generateWebSiteSchema } from '@/lib/seo/schema';
 
 const pretendard = localFont({
   src: [
-    { path: '../public/fonts/Pretendard-Thin.woff2', weight: '100' },
-    { path: '../public/fonts/Pretendard-ExtraLight.woff2', weight: '200' },
     { path: '../public/fonts/Pretendard-Light.woff2', weight: '300' },
     { path: '../public/fonts/Pretendard-Regular.woff2', weight: '400' },
     { path: '../public/fonts/Pretendard-Medium.woff2', weight: '500' },
     { path: '../public/fonts/Pretendard-SemiBold.woff2', weight: '600' },
     { path: '../public/fonts/Pretendard-Bold.woff2', weight: '700' },
-    { path: '../public/fonts/Pretendard-ExtraBold.woff2', weight: '800' },
-    { path: '../public/fonts/Pretendard-Black.woff2', weight: '900' },
   ],
   variable: '--font-pretendard',
   display: 'swap',
 });
 
 const changwonDangam = localFont({
-  src: '../public/fonts/ChangwonDangamRound.otf',
+  src: '../public/fonts/ChangwonDangamRound.woff2',
   variable: '--font-dangam',
   display: 'swap',
 });
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s | 앤아더라이프 심리상담연구소',
   },
   description: '앤아더라이프 심리상담연구소 - 전문 심리상담과 가족치료, 부부상담, 아동청소년상담을 제공합니다.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://andotherlife.com'),
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
@@ -56,6 +54,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#2d6a4f',
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -64,6 +68,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${changwonDangam.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
+        <SchemaMarkup schema={[generateOrganizationSchema(), generateWebSiteSchema()]} />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-[#2d6a4f]"
@@ -71,9 +76,9 @@ export default function RootLayout({
           본문으로 건너뛰기
         </a>
         <Header />
-        <div id="main-content" className="pb-24">
+        <main id="main-content" className="pb-24">
           {children}
-        </div>
+        </main>
         <Footer />
         <FloatingCTAWrapper />
       </body>

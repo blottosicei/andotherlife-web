@@ -54,7 +54,7 @@
 ### 2.1 전체 구조
 
 ```
-andtoherlife-web/
+notherlife-web/
 ├── app/                               # Next.js App Router
 │   ├── layout.tsx                     # 루트 레이아웃 (글로벌 메타, 폰트, 네비게이션, 분석)
 │   ├── page.tsx                       # 홈페이지
@@ -510,13 +510,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...
 
 # 사이트 기본정보
-NEXT_PUBLIC_SITE_URL=https://andtoherlife.com
+NEXT_PUBLIC_SITE_URL=https://notherlife.com
 NEXT_PUBLIC_SITE_NAME=앤아더라이프 심리상담연구소
-NEXT_PUBLIC_SITE_EMAIL=contact@andtoherlife.com
+NEXT_PUBLIC_SITE_EMAIL=contact@notherlife.com
 NEXT_PUBLIC_SITE_PHONE=02-1234-5678
 
 # Vercel (배포)
-VERCEL_URL=andtoherlife.vercel.app
+VERCEL_URL=notherlife.vercel.app
 REVALIDATION_SECRET=your-secret-key-min-32-characters
 
 # 이미지 생성 (나노바나나2)
@@ -527,7 +527,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 # 이메일 (선택)
 SENDGRID_API_KEY=SG.xxx
-SENDGRID_FROM_EMAIL=noreply@andtoherlife.com
+SENDGRID_FROM_EMAIL=noreply@notherlife.com
 ```
 
 ### 4.2 .env.example (템플릿)

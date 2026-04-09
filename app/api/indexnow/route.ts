@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'andtoherlife-indexnow-key';
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'andotherlife-indexnow-key';
 
 export async function GET() {
   return new NextResponse(INDEXNOW_KEY, {
@@ -10,7 +10,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const { urls } = await request.json();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andotherlife.com';
 
   if (!urls || !Array.isArray(urls)) {
     return NextResponse.json({ error: 'urls array required' }, { status: 400 });

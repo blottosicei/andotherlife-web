@@ -168,7 +168,7 @@
 | 항목 | 현재 | 변경 |
 |------|------|------|
 | 전화번호 | 02-1234-5678 | 실제 번호 (확인 필요) |
-| 이메일 | contact@andtoherlife.com | business@mindfullabs.ai |
+| 이메일 | contact@notherlife.com | business@mindfullabs.ai |
 | 주소 | 없음 | 서울시 마포구 잔다리로 73, 5층 |
 | 교통 | 없음 | 합정역 도보 5분, 홍대입구역 도보 10분 |
 

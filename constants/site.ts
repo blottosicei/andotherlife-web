@@ -1,9 +1,9 @@
 export const SITE_CONFIG = {
   name: '앤아더라이프 심리상담연구소',
   shortName: '앤아더라이프',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://andtoherlife.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://andotherlife.com',
   email: process.env.NEXT_PUBLIC_SITE_EMAIL || 'business@mindfullabs.ai',
-  phone: process.env.NEXT_PUBLIC_SITE_PHONE || '',
+  phone: process.env.NEXT_PUBLIC_SITE_PHONE || '070-8989-7532',
   description: '앤아더라이프 심리상담연구소 - 전문 심리상담과 가족치료, 부부상담, 아동청소년상담을 제공합니다.',
   locale: 'ko_KR',
   language: 'ko',

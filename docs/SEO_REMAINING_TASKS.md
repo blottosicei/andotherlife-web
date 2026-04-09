@@ -14,16 +14,16 @@
 | `NEXT_PUBLIC_SITE_PHONE` | 대표 전화번호 (스키마 + contact 페이지) | `02-123-4567` |
 | `NEXT_PUBLIC_SITE_EMAIL` | 대표 이메일 (기본값: `business@mindfullabs.ai`) | `business@mindfullabs.ai` |
 | `NEXT_PUBLIC_KAKAO_CHANNEL` | 카카오톡 채널 URL | `https://pf.kakao.com/_xAbCdE` |
-| `NEXT_PUBLIC_NAVER_BLOG` | 네이버 블로그 URL (Organization sameAs) | `https://blog.naver.com/andtoherlife` |
-| `NEXT_PUBLIC_INSTAGRAM` | 인스타그램 URL (Organization sameAs) | `https://www.instagram.com/andtoherlife` |
+| `NEXT_PUBLIC_NAVER_BLOG` | 네이버 블로그 URL (Organization sameAs) | `https://blog.naver.com/notherlife` |
+| `NEXT_PUBLIC_INSTAGRAM` | 인스타그램 URL (Organization sameAs) | `https://www.instagram.com/notherlife` |
 
 **설정 방법:**
 ```bash
 # .env.local (로컬 개발)
 NEXT_PUBLIC_SITE_PHONE=02-123-4567
 NEXT_PUBLIC_KAKAO_CHANNEL=https://pf.kakao.com/_xAbCdE
-NEXT_PUBLIC_NAVER_BLOG=https://blog.naver.com/andtoherlife
-NEXT_PUBLIC_INSTAGRAM=https://www.instagram.com/andtoherlife
+NEXT_PUBLIC_NAVER_BLOG=https://blog.naver.com/notherlife
+NEXT_PUBLIC_INSTAGRAM=https://www.instagram.com/notherlife
 
 # Vercel 대시보드 → Settings → Environment Variables 에서도 동일하게 설정
 ```
@@ -167,7 +167,7 @@ export async function generateStaticParams() {
 ## 6. IndexNow 키 파일 경로 수정
 
 - **현재:** `/api/indexnow` 엔드포인트에서 키 반환
-- **문제:** IndexNow 프로토콜은 `https://andtoherlife.com/{key}.txt` (루트 레벨)에서 키 검증
+- **문제:** IndexNow 프로토콜은 `https://notherlife.com/{key}.txt` (루트 레벨)에서 키 검증
 - **수정:**
   1. IndexNow 키 값 확인 (`INDEXNOW_KEY` 환경변수)
   2. `public/{키값}.txt` 파일 생성 (내용: 키값만 한 줄)

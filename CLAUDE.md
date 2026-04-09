@@ -34,6 +34,13 @@ styles/        → 글로벌 CSS
 public/        → 정적 자산
 supabase/      → DB 마이그레이션 + Edge Functions
 docs/          → 기획 문서 (PRD, IA, DESIGN_SYSTEM 등)
+marketing/     → 마케팅 프로젝트 (캠페인, 보고서, 소재, 연동 코드)
+  campaigns/   → 광고 캠페인별 데이터 (meta/, google/ 등)
+  reports/     → Claude 생성 광고 보고서
+  assets/      → 광고 소재 데이터 (카피, 이미지 메타, 경쟁사 레퍼런스)
+  docs/        → 마케팅 기획 문서
+  integrations/→ 슬랙봇, 웹훅 등 자동화 연동 코드
+  analytics/   → 오가닉/유료 유입 및 전환 분석 데이터
 ```
 
 ## 코딩 컨벤션
