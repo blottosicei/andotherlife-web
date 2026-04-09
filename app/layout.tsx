@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
+import Script from 'next/script';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -68,6 +69,18 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${changwonDangam.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XMZ28TZQ62"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XMZ28TZQ62');
+          `}
+        </Script>
         <SchemaMarkup schema={[generateOrganizationSchema(), generateWebSiteSchema()]} />
         <a
           href="#main-content"
