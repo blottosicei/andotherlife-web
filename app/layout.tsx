@@ -42,6 +42,11 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  verification: {
+    other: {
+      'naver-site-verification': '6426e147850952519098ac33b69760591c4e8fc1',
+    },
+  },
   robots: {
     index: true,
     follow: true,
