@@ -18,7 +18,7 @@ import { ConcernChecklist } from './_components/ConcernChecklist';
 import { TestimonialCarousel } from './_components/TestimonialCarousel';
 import { FAQSection } from './_components/FAQSection';
 import { PageViewTracker } from '@/components/analytics/PageViewTracker';
-import { CTALink } from '@/components/analytics/CTALink';
+import { YouthCTAButton } from './_components/YouthCTAButton';
 
 export const metadata: Metadata = {
   ...generatePageMetadata({
@@ -41,7 +41,6 @@ const faqsForSchema = [
   { question: '병원 치료와 어떻게 다른가요?', answer: '병원은 진단과 약물치료 중심이고, 상담은 대화를 통해 감정과 생각을 탐색하는 과정입니다. 병행도 가능합니다.' },
 ];
 
-const contactHref = `/contact?type=${encodeURIComponent('2030 청년상담 프로그램')}`;
 
 const trustPoints = [
   {
@@ -157,14 +156,13 @@ export default function YoungAdultCounselingPage() {
                   </div>
                 </div>
                 <div className="mt-8 flex flex-col items-center md:items-start">
-                  <CTALink
-                    href={contactHref}
+                  <YouthCTAButton
                     ctaName="첫 상담 무료로 시작하기"
                     ctaLocation="hero"
                     className="flex w-full items-center justify-center rounded-xl bg-[#2d6a4f] px-7 py-3.5 text-base font-medium text-white shadow-lg shadow-[#2d6a4f]/20 hover:bg-[#1f5e44] transition-colors md:inline-flex md:w-auto"
                   >
                     첫 상담 무료로 시작하기 <ArrowRight className="ml-2 h-4 w-4" />
-                  </CTALink>
+                  </YouthCTAButton>
                   <p className="mt-3 text-sm text-[#8a8f8b]">5분이면 신청 완료</p>
                 </div>
               </div>
@@ -252,14 +250,13 @@ export default function YoungAdultCounselingPage() {
               <p className="text-sm text-[#5c605d]">
                 앤아더라이프에서는 상담과 심리검사를 함께 진행할 수 있습니다.
               </p>
-              <CTALink
-                href={contactHref}
+              <YouthCTAButton
                 ctaName="심리검사 받기"
                 ctaLocation="psych-test-section"
                 className="mt-4 inline-flex items-center rounded-xl bg-[#2d6a4f] px-6 py-3 text-sm font-medium text-white hover:bg-[#1f5e44] transition-colors"
               >
                 심리검사 받기 <ArrowRight className="ml-2 h-4 w-4" />
-              </CTALink>
+              </YouthCTAButton>
             </div>
           </div>
         </section>
@@ -343,14 +340,13 @@ export default function YoungAdultCounselingPage() {
             <h2 className="text-2xl font-bold text-white md:text-3xl">
               전문상담, 첫 회기는 무료로 경험해보세요.
             </h2>
-            <CTALink
-              href={contactHref}
+            <YouthCTAButton
               ctaName="첫 상담 신청하기"
               ctaLocation="mid-page-cta"
               className="mt-8 inline-flex items-center rounded-xl bg-white px-7 py-3.5 text-base font-semibold text-[#2d6a4f] shadow-lg hover:bg-[#b1f0ce] transition-colors"
             >
               첫 상담 신청하기 <ArrowRight className="ml-2 h-4 w-4" />
-            </CTALink>
+            </YouthCTAButton>
             <p className="mt-4 text-sm text-white/60">
               기록에 남지 않습니다 · 5분이면 신청 완료
             </p>
@@ -479,14 +475,13 @@ export default function YoungAdultCounselingPage() {
                 혼자 고민할 결심 말고,<br />
                 상담받을 결심을 해보세요.
               </h2>
-              <CTALink
-                href={contactHref}
+              <YouthCTAButton
                 ctaName="첫 상담 신청하기"
                 ctaLocation="bottom-cta"
                 className="inline-block rounded-lg border-2 border-white px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#2d6a4f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#2d6a4f]"
               >
                 첫 상담 신청하기
-              </CTALink>
+              </YouthCTAButton>
             </div>
           </div>
         </section>
