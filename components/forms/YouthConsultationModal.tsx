@@ -240,7 +240,15 @@ export function YouthConsultationModal({ isOpen, onClose }: YouthConsultationMod
             {/* Header */}
             <div className="flex-shrink-0 border-b border-[#e6e9e5] bg-white px-6 py-4">
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-bold text-[#2d6a4f]">2030 청년상담 신청</span>
+                <div>
+                  <span className="font-bold text-[#2d6a4f]">2030 청년상담 신청</span>
+                  <p className="mt-1 text-xs text-[#8a8f8b]">2030 청년의 심리 문제를 돕기 위해 최소한의 가격으로 제공하는 앤아더라이프의 상담 프로그램입니다.</p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    <span className="rounded-full bg-[#b1f0ce]/40 px-2 py-0.5 text-[11px] font-medium text-[#1f5e44]">첫 상담 무료</span>
+                    <span className="rounded-full bg-[#b1f0ce]/40 px-2 py-0.5 text-[11px] font-medium text-[#1f5e44]">이후 회당 2만원</span>
+                    <span className="rounded-full bg-[#b1f0ce]/40 px-2 py-0.5 text-[11px] font-medium text-[#1f5e44]">심리검사 병행 가능</span>
+                  </div>
+                </div>
                 <button
                   onClick={handleClose}
                   className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-[#f3f4f0]"

@@ -82,12 +82,22 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href={contactHref}
-              className="hidden md:inline-flex items-center rounded-lg bg-[#8c4f36] px-4 py-2 text-sm font-medium text-white hover:bg-[#7d432b] transition-colors"
-            >
-              상담 예약하기
-            </Link>
+            {pathname === '/counseling/young-adult' ? (
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-youth-modal'))}
+                className="hidden md:inline-flex items-center rounded-lg bg-[#8c4f36] px-4 py-2 text-sm font-medium text-white hover:bg-[#7d432b] transition-colors"
+              >
+                상담 예약하기
+              </button>
+            ) : (
+              <Link
+                href={contactHref}
+                className="hidden md:inline-flex items-center rounded-lg bg-[#8c4f36] px-4 py-2 text-sm font-medium text-white hover:bg-[#7d432b] transition-colors"
+              >
+                상담 예약하기
+              </Link>
+            )}
             <button
               className="md:hidden p-2 text-[#2f3331]"
               onClick={() => setMobileOpen(true)}

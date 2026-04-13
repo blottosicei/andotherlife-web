@@ -18,7 +18,7 @@ import { ConcernChecklist } from './_components/ConcernChecklist';
 import { TestimonialCarousel } from './_components/TestimonialCarousel';
 import { FAQSection } from './_components/FAQSection';
 import { PageViewTracker } from '@/components/analytics/PageViewTracker';
-import { YouthCTAButton } from './_components/YouthCTAButton';
+import { YouthCTAButton, YouthModalListener } from './_components/YouthCTAButton';
 
 export const metadata: Metadata = {
   ...generatePageMetadata({
@@ -104,6 +104,7 @@ export default function YoungAdultCounselingPage() {
       <SchemaMarkup schema={[breadcrumbSchema, serviceSchema, faqSchema]} />
 
       <PageViewTracker contentName="2030 청년상담 프로그램" contentCategory="counseling" />
+      <YouthModalListener />
 
       <main>
         {/* ─── 1. Hero ─── */}
