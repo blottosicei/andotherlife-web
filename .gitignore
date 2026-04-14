@@ -46,6 +46,9 @@ next-env.d.ts
 # business planning docs (sensitive)
 andotherlife-*.md
 
+# python cache
+__pycache__/
+
 # script output files
 scripts/content.json
 scripts/review-feedback.json
