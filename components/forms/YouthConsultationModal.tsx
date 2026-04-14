@@ -41,7 +41,6 @@ const TIME_OPTIONS = [
 const GENDER_OPTIONS = [
   { value: '남성', label: '남성' },
   { value: '여성', label: '여성' },
-  { value: '기타', label: '기타' },
 ];
 
 // ── Zod 스키마 ──
@@ -65,7 +64,7 @@ const formSchema = z.object({
       },
       { message: '2030 청년상담은 1987~2007년생을 위한 프로그램입니다. 출생연도를 다시 확인해 주세요.' },
     ),
-  gender: z.enum(['남성', '여성', '기타'], { error: '성별을 선택해주세요' }),
+  gender: z.enum(['남성', '여성'], { error: '성별을 선택해주세요' }),
   agreePrivacy: z.literal(true, { error: '개인정보 수집 및 제3자 제공에 동의해주세요' }),
 });
 
@@ -125,10 +124,6 @@ export function YouthConsultationModal({ isOpen, onClose }: YouthConsultationMod
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
-      if (step === 1 && watchedValues.hasSuicidalRisk) {
-        setShowCrisisAlert(true);
-        return;
-      }
       setStep(step + 1);
     }
   };

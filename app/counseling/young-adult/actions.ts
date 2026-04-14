@@ -18,7 +18,7 @@ const youthConsultationSchema = z.object({
     const year = parseInt(val, 10);
     return !isNaN(year) && year >= 1987 && year <= 2007;
   }),
-  gender: z.enum(['남성', '여성', '기타']),
+  gender: z.enum(['남성', '여성']),
   agreePrivacy: z.literal(true),
 });
 
