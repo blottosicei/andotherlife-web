@@ -131,7 +131,7 @@ export default async function ContactPage({
                   <div>
                     <p className="text-xs text-[#5c605d]">전화</p>
                     <p className="text-sm font-medium text-[#2f3331]">
-                      {SITE_CONFIG.phone || '010-3157-4843'}
+                      {SITE_CONFIG.phone || '070-8989-7532'}
                     </p>
                   </div>
                 </li>

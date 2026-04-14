@@ -14,6 +14,7 @@
 import { config } from 'dotenv';
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
+import { execSync } from 'child_process';
 import { createClient } from '@supabase/supabase-js';
 
 config({ path: resolve(__dirname, '../.env.local') });
@@ -50,6 +51,34 @@ async function main() {
 
   // 본문 끝 빈 FAQ 헤드라인 자동 제거 (FAQSection 컴포넌트가 별도 렌더링)
   content.content = content.content.replace(/\n+## 자주 묻는 질문\s*$/, '').trimEnd();
+
+  // SEO 분석
+  if (!contentJson.skipSeoAnalysis) {
+    console.log('📈 SEO 분석 중...\n');
+    try {
+      execSync(
+        'python3 scripts/seo-analysis/analyze.py scripts/content.json --output scripts/seo-report.json',
+        { encoding: 'utf-8', cwd: resolve(__dirname, '..') }
+      );
+      const seoReport = JSON.parse(readFileSync(resolve(__dirname, 'seo-report.json'), 'utf-8'));
+      const { overall_score, grade, scores, recommendations } = seoReport;
+      console.log(`📊 SEO 분석 결과: ${overall_score}점 / ${grade}등급`);
+      console.log(`  키워드: ${scores?.keyword ?? '-'}점 | 가독성: ${scores?.readability ?? '-'}점 | 메타: ${scores?.meta ?? '-'}점 | 구조: ${scores?.structure ?? '-'}점`);
+      if (recommendations?.length > 0) {
+        for (const rec of recommendations) {
+          console.log(`  💡 ${rec}`);
+        }
+      }
+      if (overall_score < 50) {
+        console.warn(`⚠️ SEO 점수가 낮습니다 (${overall_score}점). 콘텐츠 개선을 권장합니다.`);
+      }
+      console.log('💾 SEO 리포트 저장: scripts/seo-report.json\n');
+    } catch (err) {
+      console.warn('⚠️ SEO 분석 스킵 (Python 실행 오류)');
+    }
+  } else {
+    console.log('⏭️ SEO 분석 스킵\n');
+  }
 
   // Step 0: Gemini 교차 검증
   if (!contentJson.skipReview) {
@@ -301,7 +330,8 @@ ${content.content}`;
     const { data: programs } = await supabase
       .from('counseling_programs')
       .select('id, title, slug, match_keywords')
-      .eq('is_active', true);
+      .eq('is_active', true)
+      .eq('is_cta_enabled', true);
 
     if (programs && content.keywords) {
       let bestId: string | null = null;

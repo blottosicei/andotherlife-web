@@ -24,7 +24,8 @@ export async function matchCounselingProgram(
   const { data: programs, error } = await supabase
     .from('counseling_programs')
     .select('id, title, slug, cta_heading, cta_button_text, match_keywords')
-    .eq('is_active', true);
+    .eq('is_active', true)
+    .eq('is_cta_enabled', true);
 
   if (error || !programs || programs.length === 0) return null;
 

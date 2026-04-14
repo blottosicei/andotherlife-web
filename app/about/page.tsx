@@ -120,10 +120,7 @@ export default function AboutPage() {
                 >
                   상담 철학
                 </h2>
-                <p className="leading-relaxed text-[#5c605d]">
-                  앤아더라이프는 보웬(Bowen) 가족체계이론과 미누친(Minuchin)의 구조적 가족치료를 기반으로 합니다. 개인의 문제를 가족이라는 체계 안에서 이해하고, 관계의 구조적 변화를 통해 근본적 회복을 추구합니다. 이인수 대표는 University of Pennsylvania와 The Bowen Center, Philadelphia Child and Family Therapy Training Center에서 직접 수련한 경험을 바탕으로, 국제적 수준의 상담 접근법을 국내에 도입하여 실천하고 있습니다.
-                </p>
-                <div className="mt-6 border-l-4 border-[#2d6a4f] pl-5">
+                <div className="mb-6 border-l-4 border-[#2d6a4f] pl-5">
                   <h3 className="mb-3 text-lg font-semibold text-[#2f3331]">
                     &apos;그리고&apos; 다른 삶 &apos;&amp; Other Life&apos;
                   </h3>
@@ -134,6 +131,9 @@ export default function AboutPage() {
                     상담은 우리를 그런 지각과 용기로 안내하는 길잡이입니다. &apos;그리고 다른 삶&apos;은 우리의 고통과 슬픔의 원인이 되는 시련을 스스로 견디고 이겨냄으로써 우리가 살아가게 되는 그런 삶입니다. 인간의 삶의 궁극적 행복은 우리가 부단히 우리 자신의 삶을 살아간다는 데 있습니다.
                   </p>
                 </div>
+                <p className="leading-relaxed text-[#5c605d]">
+                  앤아더라이프는 보웬(Bowen) 가족체계이론과 미누친(Minuchin)의 구조적 가족치료를 기반으로 합니다. 개인의 문제를 가족이라는 체계 안에서 이해하고, 관계의 구조적 변화를 통해 근본적 회복을 추구합니다. 이인수 대표는 University of Pennsylvania와 The Bowen Center, Philadelphia Child and Family Therapy Training Center에서 직접 수련한 경험을 바탕으로, 국제적 수준의 상담 접근법을 국내에 도입하여 실천하고 있습니다.
+                </p>
               </div>
               <div className="flex items-center justify-center rounded-xl bg-white p-12 md:p-16">
                 <Image
@@ -159,7 +159,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {[
                 { src: '/images/center/counseling-room.webp', label: '개인 상담실' },
-                { src: '/images/center/lounge.webp', label: '대기실' },
+                { src: '/images/center/lounge.webp', label: '가족상담실' },
                 { src: '/images/center/seminar-room.webp', label: '교육 세미나실' },
                 { src: '/images/center/entrance.webp', label: '센터 입구' },
               ].map(({ src, label }) => (

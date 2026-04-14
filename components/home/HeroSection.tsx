@@ -31,7 +31,7 @@ export function HeroSection() {
           </p>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
             전문 심리상담사와 함께 마음건강을 시작하세요.
-            보웬가족체계치료와 구조적가족치료를 기반으로 관계의 근본적 변화를 이끕니다.
+            체계론적 관점을 기반으로 관계의 근본적 변화를 이끕니다.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link

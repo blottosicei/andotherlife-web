@@ -58,63 +58,71 @@ const AD_SETS = [
     id: 1,
     name: "burnout",
     label: "번아웃/직장 스트레스",
-    bgPrompt:
-      "A soft, melancholic photograph of an empty office desk at dusk, warm golden light filtering through window blinds, a single coffee cup left behind, shallow depth of field, muted warm tones with slight desaturation, editorial photography style, no text, no people, calming yet lonely atmosphere",
     ads: [
-      { id: "A", headline: "출근길이 무서워진 건\n언제부터였을까", sub: "첫 상담 무료 · 회당 2만원", highlight: ["무서워진"] },
-      { id: "B", headline: "일요일 밤마다\n가슴이 답답한 당신에게", sub: "혼자 고민하지 마세요", highlight: ["답답한"] },
-      { id: "C", headline: "퇴사할까 버틸까,\n혼자 고민하고 있다면", sub: "전문 상담사와 함께 정리해보세요", highlight: ["혼자"] },
-      { id: "D", headline: "회사에선 괜찮은 척,\n집에선 아무것도\n못 하겠어요", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["괜찮은 척"] },
+      { id: "A", headline: "출근길이 무서워진 건\n언제부터였을까", sub: "첫 상담 무료 · 회당 2만원", highlight: ["무서워진"],
+        bgPrompt: "A soft melancholic photograph of a dark empty subway platform at dawn, fluorescent lights reflecting on polished floor, a single bench, muted blue-grey tones, lonely commute atmosphere, editorial photography, no text, no people" },
+      { id: "B", headline: "일요일 밤마다\n가슴이 답답한 당신에게", sub: "혼자 고민하지 마세요", highlight: ["답답한"],
+        bgPrompt: "A moody photograph of a dimly lit bedroom at night with soft lamplight, curtains slightly open showing dark sky, rumpled blankets, warm amber and deep blue tones, Sunday night anxiety mood, editorial style, no text, no people" },
+      { id: "C", headline: "퇴사할까 버틸까,\n혼자 고민하고 있다면", sub: "전문 상담사와 함께 정리해보세요", highlight: ["혼자"],
+        bgPrompt: "A contemplative photograph of a coffee cup on a windowsill overlooking a blurred cityscape, golden hour light, reflection in the glass, warm muted tones, crossroads and decision mood, editorial photography, no text, no people" },
+      { id: "D", headline: "회사에선 괜찮은 척,\n집에선 아무것도\n못 하겠어요", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["괜찮은 척"],
+        bgPrompt: "A soft photograph of an empty office desk at dusk, warm golden light filtering through window blinds, a single coffee cup left behind, shallow depth of field, muted warm tones with slight desaturation, editorial photography, no text, no people" },
     ],
   },
   {
     id: 2,
     name: "breakup",
     label: "이별/연애 고민",
-    bgPrompt:
-      "A dreamy, soft-focus photograph of a rainy window at night with blurred city lights in the background, raindrops on glass creating bokeh effects, pastel blue and warm amber tones, intimate and reflective mood, cinematic still life, no text, no people",
     ads: [
-      { id: "A", headline: "괜찮다고 했는데,\n아직도 그 노래를\n못 듣겠어요", sub: "첫 상담 무료 · 회당 2만원", highlight: ["못 듣겠어요"] },
-      { id: "B", headline: "헤어지면\n달라질 줄 알았는데,\n여전히 힘들어요", sub: "전문 상담사와 함께 정리해보세요", highlight: ["여전히"] },
-      { id: "C", headline: "매번 비슷한 연애를\n반복하고 있다면", sub: "나의 관계 패턴, 함께 들여다봐요", highlight: ["반복"] },
-      { id: "D", headline: "혼자가 되면 불안하고,\n함께 있으면 지치나요", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["불안", "지치나요"] },
+      { id: "A", headline: "괜찮다고 했는데,\n아직도 그 노래를\n못 듣겠어요", sub: "첫 상담 무료 · 회당 2만원", highlight: ["못 듣겠어요"],
+        bgPrompt: "A dreamy close-up photograph of vintage earphones tangled on a wooden table next to a cold cup of tea, soft warm light, nostalgic and melancholic atmosphere, shallow depth of field, film grain, no text, no people" },
+      { id: "B", headline: "헤어지면\n달라질 줄 알았는데,\n여전히 힘들어요", sub: "전문 상담사와 함께 정리해보세요", highlight: ["여전히"],
+        bgPrompt: "A soft-focus photograph of a rainy window at night with blurred city lights in the background, raindrops on glass creating bokeh effects, pastel blue and warm amber tones, intimate and reflective mood, cinematic still life, no text, no people" },
+      { id: "C", headline: "매번 비슷한 연애를\n반복하고 있다면", sub: "나의 관계 패턴, 함께 들여다봐요", highlight: ["반복"],
+        bgPrompt: "A moody photograph of two empty chairs facing each other at a small cafe table, one chair slightly pushed back, soft diffused light, muted pastel tones, quiet tension and reflection mood, editorial style, no text, no people" },
+      { id: "D", headline: "혼자가 되면 불안하고,\n함께 있으면 지치나요", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["불안", "지치나요"],
+        bgPrompt: "A contemplative photograph of a single person's shadow cast on a warm-toned wall during golden hour, abstract and emotional, soft gradients from amber to deep blue, solitude mood, artistic photography, no text, no people" },
     ],
   },
   {
     id: 3,
     name: "depression",
     label: "우울/무기력/감정 조절",
-    bgPrompt:
-      "A serene, contemplative photograph of soft morning light falling on an unmade bed with white linen, gentle shadows, a small potted plant on the windowsill slightly out of focus, muted sage green and cream tones, quiet and introspective atmosphere, editorial style, no text, no people",
     ads: [
-      { id: "A", headline: "딱히 이유는 없는데,\n매일이 무거워요", sub: "첫 상담 무료 · 회당 2만원", highlight: ["무거워요"] },
-      { id: "B", headline: "웃고 있는데\n왜 눈물이 나는 걸까", sub: "혼자 안고 있지 않아도 됩니다", highlight: ["눈물"] },
-      { id: "C", headline: "좋아하던 것도 이제\n아무 감흥이 없어요", sub: "전문 상담사와 이야기해보세요", highlight: ["아무 감흥이"] },
-      { id: "D", headline: "괜찮다가도\n갑자기 무너지는 하루들", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["무너지는"] },
+      { id: "A", headline: "딱히 이유는 없는데,\n매일이 무거워요", sub: "첫 상담 무료 · 회당 2만원", highlight: ["무거워요"],
+        bgPrompt: "A serene photograph of soft morning light falling on an unmade bed with white linen, gentle shadows, a small potted plant on the windowsill slightly out of focus, muted sage green and cream tones, quiet and introspective atmosphere, no text, no people" },
+      { id: "B", headline: "웃고 있는데\n왜 눈물이 나는 걸까", sub: "혼자 안고 있지 않아도 됩니다", highlight: ["눈물"],
+        bgPrompt: "A close-up photograph of rain droplets on a glass surface with blurred soft light behind, each drop reflecting tiny lights, melancholic yet beautiful, cool blue and warm amber bokeh, emotional stillness, no text, no people" },
+      { id: "C", headline: "좋아하던 것도 이제\n아무 감흥이 없어요", sub: "전문 상담사와 이야기해보세요", highlight: ["아무 감흥이"],
+        bgPrompt: "A quiet photograph of dried flowers in a small vase on a dusty windowsill, muted desaturated colors, faded beauty, soft overcast light, stillness and apathy mood, editorial photography, no text, no people" },
+      { id: "D", headline: "괜찮다가도\n갑자기 무너지는 하루들", sub: "첫 상담 무료 · 기록에 남지 않습니다", highlight: ["무너지는"],
+        bgPrompt: "A dramatic photograph of storm clouds breaking with a single ray of warm light, seen through a large window, contrast of dark and light, emotional transition mood, cinematic wide shot, muted tones, no text, no people" },
     ],
   },
   {
     id: 4,
     name: "price",
     label: "가격 파괴형",
-    bgPrompt:
-      "A clean, minimalist flat lay photograph of a warm latte in a ceramic cup on a light wooden table, soft natural light from the side, a small green leaf nearby, warm beige and cream color palette with subtle green accent, inviting and approachable aesthetic, no text, no people",
     ads: [
-      { id: "A", headline: "심리상담 1회\n= 아메리카노 2잔", sub: "회당 2만원 · 한국상담학회 인증 수련기관", highlight: ["아메리카노 2잔"] },
-      { id: "B", headline: "첫 상담 무료.\n부담 없이 시작하세요", sub: "2030 청년상담 · 회당 2만원", highlight: ["무료"] },
-      { id: "C", headline: "10만원짜리 상담과\n같은 전문성, 2만원", sub: "교수급 슈퍼비전 · 첫 상담 무료", highlight: ["2만원"] },
+      { id: "A", headline: "심리상담 1회\n= 아메리카노 2잔", sub: "회당 2만원 · 한국상담학회 인증 수련기관", highlight: ["아메리카노 2잔"],
+        bgPrompt: "A clean minimalist flat lay photograph of two cups of americano coffee on a light wooden table with a small green leaf, soft natural side light, warm beige and cream palette with subtle green accent, inviting aesthetic, no text, no people" },
+      { id: "B", headline: "첫 상담 무료.\n부담 없이 시작하세요", sub: "2030 청년상담 · 회당 2만원", highlight: ["무료"],
+        bgPrompt: "A bright welcoming photograph of an open door with warm sunlight streaming through into a cozy room, fresh green plant near the entrance, hopeful and inviting atmosphere, light airy tones, editorial style, no text, no people" },
+      { id: "C", headline: "10만원짜리 상담과\n같은 전문성, 2만원", sub: "교수급 슈퍼비전 · 첫 상담 무료", highlight: ["2만원"],
+        bgPrompt: "A warm photograph of a comfortable counseling-style armchair in a cozy room with bookshelves, soft warm lighting, professional yet approachable atmosphere, earth tones with green accents, editorial interior photography, no text, no people" },
     ],
   },
   {
     id: 5,
     name: "test",
     label: "심리검사 후킹형",
-    bgPrompt:
-      "A thoughtful overhead photograph of a journal open on a cozy desk with a pen, soft fairy lights in the background slightly blurred, warm amber and soft white tones, self-reflection and discovery mood, cozy editorial photography, no text, no people",
     ads: [
-      { id: "A", headline: "MBTI 말고,\n진짜 나를 알려주는\n심리검사", sub: "전문가 해석 포함 · 첫 상담 무료", highlight: ["진짜 나를"] },
-      { id: "B", headline: "나를 정확히\n알고 싶다면,\n심리검사부터", sub: "MMPI-2 · TCI 전문 검사", highlight: ["정확히"] },
-      { id: "C", headline: "검사만 하고 끝?\n전문가가 직접\n해석해드립니다", sub: "2030 청년상담 · 회당 2만원", highlight: ["직접"] },
+      { id: "A", headline: "MBTI 말고,\n진짜 나를 알려주는\n심리검사", sub: "전문가 해석 포함 · 첫 상담 무료", highlight: ["진짜 나를"],
+        bgPrompt: "A thoughtful overhead photograph of a journal open on a cozy desk with a pen, soft fairy lights in the background slightly blurred, warm amber and soft white tones, self-reflection and discovery mood, cozy editorial photography, no text, no people" },
+      { id: "B", headline: "나를 정확히\n알고 싶다면,\n심리검사부터", sub: "MMPI-2 · TCI 전문 검사", highlight: ["정확히"],
+        bgPrompt: "A clean photograph of a magnifying glass resting on an open notebook with handwritten notes, soft focused warm light, exploration and self-discovery theme, minimal composition, warm cream and amber tones, no text, no people" },
+      { id: "C", headline: "검사만 하고 끝?\n전문가가 직접\n해석해드립니다", sub: "2030 청년상담 · 회당 2만원", highlight: ["직접"],
+        bgPrompt: "A professional photograph of reading glasses placed on top of organized papers on a clean desk, soft directional light, expertise and care mood, warm neutral tones with subtle green accent, editorial style, no text, no people" },
     ],
   },
 ];
@@ -318,36 +326,35 @@ async function main() {
   console.log(`   출력: ${OUTPUT_DIR}\n`);
 
   for (const set of sets) {
-    const bgPath = path.join(BG_DIR, `set${set.id}_${set.name}_bg.png`);
-
-    // 1. 배경 이미지 생성 (세트당 1개)
-    if (!compositeOnly) {
-      if (fs.existsSync(bgPath)) {
-        console.log(`⏭️  Set ${set.id} 배경 이미지 이미 존재 — 건너뜀`);
-      } else {
-        console.log(`🖼️  Set ${set.id} (${set.label}) 배경 이미지 생성 중...`);
-        try {
-          const imgBuffer = await generateBackground(set.bgPrompt, apiKey);
-          await sharp(imgBuffer).resize(SIZE, SIZE, { fit: "cover" }).png().toFile(bgPath);
-          console.log(`   ✅ 저장: ${path.basename(bgPath)}`);
-        } catch (err) {
-          console.error(`   ❌ 실패: ${err.message}`);
-          continue;
-        }
-      }
-    }
-
-    if (!fs.existsSync(bgPath)) {
-      console.error(`   ❌ 배경 이미지 없음: ${bgPath} — --composite-only 전에 배경을 먼저 생성하세요`);
-      continue;
-    }
-
-    // 2. 소재별 텍스트 합성
     const ads = adFilter ? set.ads.filter((a) => a.id === adFilter) : set.ads;
 
     for (const ad of ads) {
+      const bgName = `set${set.id}_${set.name}_${ad.id.toLowerCase()}_bg.png`;
+      const bgPath = path.join(BG_DIR, bgName);
       const outName = `set${set.id}_${set.name}_${ad.id.toLowerCase()}.png`;
       const outPath = path.join(OUTPUT_DIR, outName);
+
+      // 1. 소재별 배경 이미지 생성
+      if (!compositeOnly) {
+        if (fs.existsSync(bgPath)) {
+          console.log(`⏭️  ${set.id}-${ad.id} 배경 이미지 이미 존재 — 건너뜀`);
+        } else {
+          console.log(`🖼️  ${set.id}-${ad.id} (${ad.headline.split("\n")[0]}) 배경 생성 중...`);
+          try {
+            const imgBuffer = await generateBackground(ad.bgPrompt, apiKey);
+            await sharp(imgBuffer).resize(SIZE, SIZE, { fit: "cover" }).png().toFile(bgPath);
+            console.log(`   ✅ 저장: ${bgName}`);
+          } catch (err) {
+            console.error(`   ❌ 배경 생성 실패: ${err.message}`);
+            continue;
+          }
+        }
+      }
+
+      if (!fs.existsSync(bgPath)) {
+        console.error(`   ❌ 배경 이미지 없음: ${bgPath}`);
+        continue;
+      }
 
       console.log(`   📝 소재 ${set.id}-${ad.id}: "${ad.headline.split("\n")[0]}..."`);
 

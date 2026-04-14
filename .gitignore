@@ -50,3 +50,6 @@ andotherlife-*.md
 scripts/content.json
 scripts/review-feedback.json
 scripts/failed-links.json
+scripts/keyword-report.json
+scripts/seo-report.json
+scripts/seo-opportunities.json

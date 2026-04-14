@@ -53,7 +53,7 @@ export default async function PostPage({ params }: { params: Params }) {
   const toc = extractToc(post.content);
   const ctaType = post.cta_type || post.category?.default_cta_type || 'consultation';
 
-  // Resolve counseling program for CTA
+  // Resolve counseling program for CTA (is_cta_enabled 필터 적용)
   let program = null;
   if (post.counseling_program_id) {
     const supabase = await (await import('@/lib/supabase/server')).createClient();
@@ -61,14 +61,17 @@ export default async function PostPage({ params }: { params: Params }) {
       .from('counseling_programs')
       .select('id, title, slug, subtitle, cta_heading, cta_button_text')
       .eq('id', post.counseling_program_id)
+      .eq('is_cta_enabled', true)
       .single();
     program = data;
-  } else if (post.category?.default_program_id) {
+  }
+  if (!program && post.category?.default_program_id) {
     const supabase = await (await import('@/lib/supabase/server')).createClient();
     const { data } = await supabase
       .from('counseling_programs')
       .select('id, title, slug, subtitle, cta_heading, cta_button_text')
       .eq('id', post.category.default_program_id)
+      .eq('is_cta_enabled', true)
       .single();
     program = data;
   }
