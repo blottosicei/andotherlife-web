@@ -10,6 +10,7 @@ const PROGRAMS_MAP: Record<string, string> = {
   'bowen-family-systems': '보웬가족체계치료 전문가과정',
   'structural-family-therapy': '구조적가족치료 전문가과정',
   'case-conceptualization': '사례개념화 연수과정',
+  'next-genogram': 'Next Genogram 가계도 워크숍',
 };
 
 type Params = Promise<{ slug: string }>;

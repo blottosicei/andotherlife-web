@@ -35,9 +35,34 @@ interface Program {
   intro?: string;
   roadmap?: RoadmapLevel[];
   competencies?: Competency[];
+  price?: string;
+  externalUrl?: string;
+  image?: string;
 }
 
 const PROGRAMS: Program[] = [
+  {
+    title: 'Next Genogram 가계도 워크숍',
+    status: '진행중',
+    duration: '4시간 (14:00~18:00)',
+    target: '상담 전문가 · 센터장',
+    instructor: '이인수 대표',
+    slug: 'next-genogram',
+    description:
+      '가계도 해석 능력을 사례 개념화에 적용하고, AI 기반 디지털 도구(마음토스)를 활용해 가계도 작성·분석을 실습하는 4시간 심화 마스터 클래스. 한국상담학회 교육연수 4시간 인정.',
+    intro:
+      '단순한 기호 암기를 넘어, 세대 간 정서적 유산을 추적하고 가족 역동을 읽는 통찰을 기릅니다. AI 기술을 활용해 수작업 30분 걸리던 가계도 작성을 3분으로 단축하는 실전 실습까지 포함합니다.',
+    roadmap: [
+      { level: 1, label: '세대 간 불안과 정서적 유산의 다세대 전수 과정 추적' },
+      { level: 2, label: '표면적 증상 아래의 가족 체계 역동 분석' },
+      { level: 3, label: '실제 임상 사례를 통한 가족 패턴 해독' },
+      { level: 4, label: 'AI 사례 개념화 및 슈퍼비전 실습' },
+      { level: 5, label: 'AI 가계도 작성·수정·완성 실전 실습' },
+    ],
+    price: '100,000원',
+    externalUrl: 'https://nextgenogram.mindthos.com/',
+    image: '/images/programs/next-genogram-workshop.webp',
+  },
   {
     title: '상담사 수련프로그램',
     status: '진행중',
@@ -154,7 +179,7 @@ export default function ProgramsPage() {
                 {/* Image */}
                 <div className="relative h-48 w-full shrink-0">
                   <Image
-                    src="/images/center/seminar-room.webp"
+                    src={program.image || '/images/center/seminar-room.webp'}
                     alt={`${program.title} 세미나실`}
                     fill
                     className="object-cover"
@@ -236,9 +261,25 @@ export default function ProgramsPage() {
                       <dt className="font-medium text-[#2f3331]">기간:</dt>
                       <dd className="text-[#5c605d]">{program.duration}</dd>
                     </div>
+                    {program.price && (
+                      <div className="col-span-2 flex gap-1">
+                        <dt className="font-medium text-[#2f3331]">참가비:</dt>
+                        <dd className="text-[#5c605d]">{program.price}</dd>
+                      </div>
+                    )}
                   </dl>
 
-                  <div className="mt-auto">
+                  <div className="mt-auto flex gap-2">
+                    {program.externalUrl && (
+                      <a
+                        href={program.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-lg bg-[#2d6a4f] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#1f5e44]"
+                      >
+                        상세보기 / 신청
+                      </a>
+                    )}
                     <ProgramInquiryModal
                       programTitle={program.title}
                       programTitles={PROGRAMS.map((p) => p.title)}
