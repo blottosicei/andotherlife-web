@@ -6,7 +6,7 @@ import { generateBreadcrumbSchema, generateServiceSchema } from '@/lib/seo/schem
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/site';
-import { ArrowRight, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
@@ -55,12 +55,9 @@ export default async function CounselingPage() {
               <Link
                 key={program.id}
                 href={`/counseling/${program.slug}`}
-                className="group flex flex-col rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-1"
+                className="group flex flex-col rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-1 min-h-[200px]"
               >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#b1f0ce]">
-                  <Heart className="h-6 w-6 text-[#2d6a4f]" />
-                </div>
-                <h2 className="text-xl font-semibold text-[#2f3331]">{program.title}</h2>
+                <h2 className="text-2xl font-bold text-[#2f3331] transition-colors group-hover:text-[#2d6a4f]">{program.title}</h2>
                 {program.subtitle && (
                   <p className="mt-1 text-sm text-[#5c605d]">{program.subtitle}</p>
                 )}
