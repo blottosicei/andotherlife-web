@@ -1,6 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import type { Category } from '@/types/blog';
 
 interface CategoryFilterProps {
@@ -9,17 +7,11 @@ interface CategoryFilterProps {
 }
 
 export function CategoryFilter({ categories, activeSlug }: CategoryFilterProps) {
-  const router = useRouter();
-
-  function handleClick(slug?: string) {
-    router.push(slug ? `/blog/${slug}` : '/blog');
-  }
-
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+    <nav aria-label="블로그 카테고리" className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
       {/* 전체 tab */}
-      <button
-        onClick={() => handleClick(undefined)}
+      <Link
+        href="/blog"
         className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
           !activeSlug
             ? 'bg-primary text-white'
@@ -27,12 +19,12 @@ export function CategoryFilter({ categories, activeSlug }: CategoryFilterProps) 
         }`}
       >
         전체
-      </button>
+      </Link>
 
       {categories.map((cat) => (
-        <button
+        <Link
           key={cat.id}
-          onClick={() => handleClick(cat.slug)}
+          href={`/blog/${cat.slug}`}
           className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
             activeSlug === cat.slug
               ? 'bg-primary text-white'
@@ -40,8 +32,8 @@ export function CategoryFilter({ categories, activeSlug }: CategoryFilterProps) 
           }`}
         >
           {cat.name}
-        </button>
+        </Link>
       ))}
-    </div>
+    </nav>
   );
 }

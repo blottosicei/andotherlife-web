@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/seo/metadata';
 import { getPublishedPosts, getCategories } from '@/lib/supabase/queries';
-import { getCategoryBySlug } from '@/constants/categories';
+import { getCategoryBySlug, CATEGORIES } from '@/constants/categories';
 import { PAGINATION, SITE_CONFIG } from '@/constants/site';
 import type { Post, Category } from '@/types/blog';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
@@ -13,6 +13,10 @@ import { Pagination } from '@/components/blog/Pagination';
 import { BlogSidebar } from '@/components/blog/BlogSidebar';
 
 export const revalidate = 3600;
+
+export function generateStaticParams() {
+  return CATEGORIES.map((cat) => ({ category: cat.slug }));
+}
 
 type Params = Promise<{ category: string }>;
 type SearchParams = Promise<{ page?: string }>;
