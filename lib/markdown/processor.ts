@@ -44,7 +44,7 @@ function rehypeExternalLinks() {
 export async function processMarkdown(markdown: string): Promise<string> {
   const result = await unified()
     .use(remarkParse)
-    .use(remarkGfm)
+    .use(remarkGfm, { singleTilde: false })
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeSlug)
     // rehype-slug만 사용 (ID 부여), autolink-headings 제거 — 본문 헤드라인에 클릭 불필요
