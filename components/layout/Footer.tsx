@@ -85,7 +85,7 @@ export async function Footer() {
                   href="/counseling"
                   className="text-sm text-[#9c9d9b] hover:text-white transition-colors"
                 >
-                  전체 보기
+                  상담 프로그램 전체 보기
                 </Link>
               </li>
             </ul>
@@ -139,24 +139,24 @@ export async function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/5">
         <div className="mx-auto max-w-[1280px] px-4 py-6 md:px-6 text-center">
-          <p className="text-xs text-[#5c605d]">
+          <p className="text-xs text-[#8b8f8c]">
             Copyright © Mindful Labs Inc. | All Rights Reserved
           </p>
           <div className="mt-2 flex justify-center gap-4">
             <Link
               href="/privacy"
-              className="text-xs text-[#5c605d] hover:text-[#9c9d9b] transition-colors"
+              className="text-xs text-[#8b8f8c] hover:text-[#9c9d9b] transition-colors"
             >
               개인정보처리방침
             </Link>
             <Link
               href="/terms"
-              className="text-xs text-[#5c605d] hover:text-[#9c9d9b] transition-colors"
+              className="text-xs text-[#8b8f8c] hover:text-[#9c9d9b] transition-colors"
             >
               이용약관
             </Link>
           </div>
-          <p className="mt-4 text-xs leading-relaxed text-[#5c605d]">
+          <p className="mt-4 text-xs leading-relaxed text-[#8b8f8c]">
             사업자등록번호 786-88-03152 | 통신판매신고번호 제2025-서울마포-0943호 |
             마인드풀랩스 주식회사(Mindful Labs Inc.) | 대표: 강호남
             <br />

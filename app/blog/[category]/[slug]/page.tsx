@@ -152,8 +152,10 @@ export default async function PostPage({ params }: { params: Params }) {
               alt={post.title}
               width={1200}
               height={630}
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="w-full object-cover"
               priority
+              fetchPriority="high"
             />
           </div>
         )}
