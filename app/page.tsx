@@ -11,7 +11,9 @@ import { BottomCTA } from '@/components/cta/BottomCTA';
 import { SITE_CONFIG } from '@/constants/site';
 
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} | 마음건강 심리상담`,
+  title: {
+    absolute: SITE_CONFIG.name,
+  },
   description: SITE_CONFIG.description,
   alternates: {
     canonical: SITE_CONFIG.url,

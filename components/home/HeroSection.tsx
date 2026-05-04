@@ -18,14 +18,15 @@ export function HeroSection() {
 
       <div className="relative mx-auto max-w-[1280px] px-4 md:px-6">
         <div className="max-w-2xl">
+          <h1 className="sr-only">앤아더라이프 심리상담연구소</h1>
           <p className="mb-4 text-sm font-medium tracking-widest text-[#b1f0ce]/80 uppercase">
             심리상담연구소 앤아더라이프
           </p>
-          <h1 className="font-dangam text-[36px] leading-[1.2] text-white md:text-[52px]">
+          <p className="font-dangam text-[36px] leading-[1.2] text-white md:text-[52px]">
             당신의 마음을 돌보는 것이{' '}
             <br className="hidden md:block" />
             우리의 일입니다
-          </h1>
+          </p>
           <p className="mt-4 font-dangam text-lg text-white/60 md:text-xl">
             &lsquo;그리고&rsquo; 다른 삶 &lsquo;&amp; Other Life&rsquo;
           </p>

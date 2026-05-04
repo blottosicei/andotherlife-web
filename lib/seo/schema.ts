@@ -92,6 +92,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     '@id': `${SITE_CONFIG.url}/#organization`,
     name: SITE_CONFIG.name,
+    alternateName: ['앤아더라이프', 'And Other Life', 'andotherlife'],
     url: SITE_CONFIG.url,
     description: SITE_CONFIG.description,
     logo: {
@@ -190,6 +191,7 @@ export function generateWebSiteSchema() {
     '@id': `${SITE_CONFIG.url}/#website`,
     url: SITE_CONFIG.url,
     name: SITE_CONFIG.name,
+    alternateName: ['앤아더라이프', 'And Other Life', 'andotherlife'],
     description: SITE_CONFIG.description,
     inLanguage: SITE_CONFIG.language,
     publisher: {
