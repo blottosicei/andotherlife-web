@@ -25,6 +25,18 @@ function createSupabase() {
   return createClient(url, key);
 }
 
+/**
+ * 현재 시각을 KST(+09:00) 오프셋의 ISO-8601 문자열로 반환.
+ * Postgres TIMESTAMPTZ는 내부적으로 UTC로 저장되지만, wire format을
+ * +09:00으로 보내면 DB 직접 조회 시에도 한국 시간 기준 값을 확인하기 쉽다.
+ */
+function toKstISOString(d: Date): string {
+  const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
+  const kst = new Date(d.getTime() + KST_OFFSET_MS);
+  // toISOString()의 "Z"를 "+09:00"으로 치환 (kst는 이미 +09 시간 값임)
+  return kst.toISOString().replace('Z', '+09:00');
+}
+
 async function main() {
   console.log('=== 블로그 발행 (로컬 실행) ===\n');
 
@@ -251,11 +263,11 @@ ${content.content}`;
     process.exit(1);
   }
 
-  // Get author
+  // Get author (기본값: 앤아더라이프)
   const { data: author } = await supabase
     .from('authors')
     .select('id')
-    .limit(1)
+    .eq('slug', 'andotherlife')
     .single();
 
   // Step 1: Image generation
@@ -395,7 +407,7 @@ ${content.content}`;
       counseling_program_id: counselingProgramId,
       reading_time: readingTime,
       cta_type: ctaType,
-      published_at: contentJson.status === 'published' ? new Date().toISOString() : null,
+      published_at: contentJson.status === 'published' ? toKstISOString(new Date()) : null,
     })
     .select('id, slug, title')
     .single();
@@ -412,6 +424,47 @@ ${content.content}`;
   console.log(`  상태: ${contentJson.status || 'draft'}`);
   console.log(`  이미지: ${thumbnailUrl ? '생성됨' : '없음'}`);
   console.log(`  CTA: ${counselingProgramId ? '매칭됨' : '카테고리 기본값'}`);
+
+  // Step 4: IndexNow 즉시 인덱싱 (Bing/Yandex/Naver/Seznam → ChatGPT/Copilot)
+  if (contentJson.status === 'published' && process.env.INDEXNOW_KEY) {
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://notherlife.com').replace(/\/$/, '');
+    const { data: cat } = await supabase
+      .from('categories')
+      .select('slug')
+      .eq('id', category.id)
+      .single();
+    const categorySlug = cat?.slug || 'mental-health';
+    const postUrl = `${siteUrl}/blog/${categorySlug}/${post.slug}`;
+    const urlList = [
+      postUrl,
+      `${siteUrl}/blog`,
+      `${siteUrl}/blog/${categorySlug}`,
+      `${siteUrl}/sitemap.xml`,
+    ];
+
+    try {
+      const host = new URL(siteUrl).hostname;
+      const res = await fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({
+          host,
+          key: process.env.INDEXNOW_KEY,
+          keyLocation: `${siteUrl}/${process.env.INDEXNOW_KEY}.txt`,
+          urlList,
+        }),
+      });
+      if (res.ok || res.status === 202) {
+        console.log(`  IndexNow: ✅ ${urlList.length}개 URL 제출 (HTTP ${res.status})`);
+      } else {
+        console.warn(`  IndexNow: ⚠️ HTTP ${res.status} — ${await res.text().catch(() => '')}`);
+      }
+    } catch (err) {
+      console.warn('  IndexNow: ⚠️ 제출 실패', err);
+    }
+  } else if (contentJson.status === 'published') {
+    console.log('  IndexNow: ⏭️ 스킵 (INDEXNOW_KEY 환경변수 없음)');
+  }
 }
 
 main().catch(console.error);
