@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: '%s | 앤아더라이프 심리상담연구소',
   },
   description: '앤아더라이프 심리상담연구소 - 전문 심리상담과 가족치료, 부부상담, 아동청소년상담을 제공합니다.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://andotherlife.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://notherlife.com'),
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
